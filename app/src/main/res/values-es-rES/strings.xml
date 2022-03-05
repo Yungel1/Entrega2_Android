@@ -18,7 +18,7 @@
     <string name="add_user">Añade un nuevo usuario:</string>
     <string name="insert_username">INSERTAR USUARIO</string>
     <string name="cancel">CANCELAR</string>
-    <string name="to">Para</string>
+    <string name="to">Para:</string>
     <string name="subject">Asunto</string>
     <string name="body">Cuerpo</string>
     <string name="send">ENVIAR</string>

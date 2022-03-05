@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UsuariosActivity">
+
+    <TextView
+        android:id="@+id/usuariosTV"
+        android:layout_width="373dp"
+        android:layout_height="49dp"
+        android:text="@string/added_users"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/idiomaBTN"
+        app:layout_constraintVertical_bias="0.016" />
+
+    <Button
+        android:id="@+id/editarEmailBTN"
+        android:layout_width="223dp"
+        android:layout_height="56dp"
+        android:onClick="onClickCambiarEmail"
+        android:text="@string/edit_email"
+        app:layout_constraintBottom_toBottomOf="@+id/idiomaBTN"
+        app:layout_constraintEnd_toStartOf="@+id/idiomaBTN"
+        app:layout_constraintHorizontal_bias="0.195"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/idiomaBTN"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/idiomaBTN"
+        android:layout_width="64dp"
+        android:layout_height="56dp"
+        android:onClick="onClickIdioma"
+        android:text="@string/idioma"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.922"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023" />
+
+    <Button
+        android:id="@+id/addUserBTN"
+        android:layout_width="278dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="4dp"
+        android:onClick="onClickAñadir"
+        android:text="@string/ADD"
+        app:layout_constraintEnd_toEndOf="@+id/usersLIST"
+        app:layout_constraintStart_toStartOf="@+id/usersLIST"
+        app:layout_constraintTop_toBottomOf="@+id/usersLIST" />
+
+    <ListView
+        android:id="@+id/usersLIST"
+        android:layout_width="404dp"
+        android:layout_height="228dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/usuariosTV"
+        app:layout_constraintHorizontal_bias="0.523"
+        app:layout_constraintStart_toStartOf="@+id/usuariosTV"
+        app:layout_constraintTop_toBottomOf="@+id/usuariosTV"
+        app:layout_constraintVertical_bias="0.067" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

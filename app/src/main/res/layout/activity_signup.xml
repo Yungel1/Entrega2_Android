@@ -7,41 +7,38 @@
     tools:context=".SignupActivity">
 
     <TextView
-        android:id="@+id/loginTV"
-        android:layout_width="373dp"
-        android:layout_height="49dp"
+        android:id="@+id/registrateTV"
+        android:layout_width="229dp"
+        android:layout_height="54dp"
+        android:gravity="center_vertical|left"
         android:text="@string/signup"
-        android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textSize="34sp"
+        android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.578"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.152" />
+        app:layout_constraintVertical_bias="0.044" />
 
     <EditText
         android:id="@+id/usuarioET"
         android:layout_width="229dp"
-        android:layout_height="66dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="4dp"
         android:ems="10"
         android:hint="@string/username"
         android:inputType="textPersonName"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/loginTV"
-        app:layout_constraintHorizontal_bias="0.479"
-        app:layout_constraintStart_toStartOf="@+id/loginTV"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.276" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/idiomaBTN" />
 
     <EditText
         android:id="@+id/contraseñaET"
         android:layout_width="229dp"
-        android:layout_height="66dp"
+        android:layout_height="50dp"
         android:ems="10"
         android:hint="@string/password"
         android:inputType="textPersonName"
@@ -51,13 +48,13 @@
         app:layout_constraintEnd_toEndOf="@+id/usuarioET"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/usuarioET"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.409" />
+        app:layout_constraintTop_toBottomOf="@+id/usuarioET"
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/emailET"
         android:layout_width="229dp"
-        android:layout_height="66dp"
+        android:layout_height="50dp"
         android:ems="10"
         android:hint="@string/email"
         android:inputType="textPersonName"
@@ -67,11 +64,11 @@
         app:layout_constraintEnd_toEndOf="@+id/contraseñaET"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/contraseñaET"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.536" />
+        app:layout_constraintTop_toBottomOf="@+id/contraseñaET"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/entrarBTN"
+        android:id="@+id/entrarSignupBTN"
         android:layout_width="120dp"
         android:layout_height="84dp"
         android:onClick="onClickEntrar"
@@ -80,8 +77,8 @@
         app:layout_constraintEnd_toEndOf="@+id/emailET"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="@+id/emailET"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.715" />
+        app:layout_constraintTop_toBottomOf="@+id/emailET"
+        app:layout_constraintVertical_bias="0.044" />
 
     <TextView
         android:id="@+id/preguntaTV"
@@ -92,24 +89,24 @@
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/entrarBTN"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="@+id/entrarBTN"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.857" />
+        app:layout_constraintEnd_toEndOf="@+id/entrarSignupBTN"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="@+id/entrarSignupBTN"
+        app:layout_constraintTop_toBottomOf="@+id/entrarSignupBTN"
+        app:layout_constraintVertical_bias="0.054" />
 
     <Button
-        android:id="@+id/iniciaSesionBTN"
+        android:id="@+id/loginBTN"
         android:layout_width="278dp"
         android:layout_height="52dp"
         android:onClick="onClickIniciaSesion"
         android:text="@string/login"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/preguntaTV"
-        app:layout_constraintHorizontal_bias="0.489"
+        app:layout_constraintHorizontal_bias="0.51"
         app:layout_constraintStart_toStartOf="@+id/preguntaTV"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.96" />
+        app:layout_constraintTop_toBottomOf="@+id/preguntaTV"
+        app:layout_constraintVertical_bias="0.087" />
 
     <Button
         android:id="@+id/idiomaBTN"
@@ -117,11 +114,11 @@
         android:layout_height="56dp"
         android:onClick="onClickIdioma"
         android:text="@string/idioma"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/registrateTV"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.922"
+        app:layout_constraintHorizontal_bias="0.953"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023" />
+        app:layout_constraintTop_toTopOf="@+id/registrateTV"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -17,7 +17,7 @@
     <string name="add_user">Add a new user:</string>
     <string name="insert_username">INSERT USERNAME</string>
     <string name="cancel">CANCEL</string>
-    <string name="to">To</string>
+    <string name="to">To:</string>
     <string name="subject">Subject</string>
     <string name="body">Body</string>
     <string name="send">SEND</string>

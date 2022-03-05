@@ -4,8 +4,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/adria/AndroidStudioProjects/Entrega1/app/src/main/res/layout/activity_login.xml" value="0.1796875" />
+        <entry key="..\:/Users/adria/AndroidStudioProjects/Entrega1/app/src/main/res/layout/activity_mail.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/adria/AndroidStudioProjects/Entrega1/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Users/adria/AndroidStudioProjects/Entrega1/app/src/main/res/layout/activity_signup.xml" value="0.1796875" />
+        <entry key="..\:/Users/adria/AndroidStudioProjects/Entrega1/app/src/main/res/layout/activity_usuario.xml" value="0.1796875" />
+        <entry key="..\:/Users/adria/AndroidStudioProjects/Entrega1/app/src/main/res/layout/activity_usuarios.xml" value="0.1796875" />
       </map>
     </option>
   </component>

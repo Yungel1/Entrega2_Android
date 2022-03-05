@@ -18,7 +18,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onClickEntrar(View v){
-
+        startActivity(new Intent(LoginActivity.this, UsuariosActivity.class));
     }
 
     public void onClickIdioma(View v){
