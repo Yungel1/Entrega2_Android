@@ -2,19 +2,15 @@ package com.example.entrega1;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 
-public class LoginActivity extends AppCompatActivity {
-
+public class SignupActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-
+        setContentView(R.layout.activity_signup);
     }
 
     public void onClickEntrar(View v){
@@ -25,8 +21,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    public void onClickRegistrate(View v){
-        startActivity(new Intent(LoginActivity.this, SignupActivity.class));
-    }
+    public void onClickIniciaSesion(View v){
 
+    }
 }

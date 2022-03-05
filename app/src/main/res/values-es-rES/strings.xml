@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Entrega1</string>
+    <string name="login">INICIA SESIÓN</string>
+    <string name="no_account_yet">¿Aún no te has registrado?</string>
+    <string name="signup">REGÍSTRATE</string>
+    <string name="idioma">EN</string>
+    <string name="username">Usuario</string>
+    <string name="password">Contraseña</string>
+    <string name="new_email">Nuevo email:</string>
+    <string name="change">CAMBIAR</string>
+    <string name="enter">ENTRAR</string>
+    <string name="ok">VALE</string>
+    <string name="email">Email</string>
+    <string name="edit_email">CAMBIAR EMAIL</string>
+    <string name="added_users">USUARIOS AÑADIDOS</string>
+    <string name="ADD">AÑADIR</string>
+    <string name="add_user">Añade un nuevo usuario:</string>
+    <string name="insert_username">INSERTAR USUARIO</string>
+    <string name="cancel">CANCELAR</string>
+    <string name="to">Para</string>
+    <string name="subject">Asunto</string>
+    <string name="body">Cuerpo</string>
+    <string name="send">ENVIAR</string>
+    <string name="already_account">¿Ya tienes una cuenta?</string>
+</resources>
