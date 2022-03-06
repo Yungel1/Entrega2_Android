@@ -60,8 +60,8 @@
 
     <ListView
         android:id="@+id/usersLIST"
-        android:layout_width="404dp"
-        android:layout_height="228dp"
+        android:layout_width="334dp"
+        android:layout_height="238dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/usuariosTV"
         app:layout_constraintHorizontal_bias="0.523"

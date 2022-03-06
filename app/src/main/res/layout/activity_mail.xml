@@ -20,6 +20,23 @@
         app:layout_constraintStart_toStartOf="@+id/paraUsuarioTV" />
 
     <EditText
+        android:id="@+id/editTextTextPersonName"
+        android:layout_width="342dp"
+        android:layout_height="47dp"
+        android:ems="10"
+        android:gravity="top|left"
+        android:hint="@string/subject"
+        android:inputType="textMultiLine"
+        android:scrollbars="vertical"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/paraUsuarioTV"
+        app:layout_constraintVertical_bias="0.046" />
+
+    <EditText
         android:id="@+id/editTextTextPersonName2"
         android:layout_width="350dp"
         android:layout_height="184dp"
@@ -75,22 +92,5 @@
         app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName2"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2"
         app:layout_constraintVertical_bias="0.042" />
-
-    <EditText
-        android:id="@+id/editTextTextPersonName"
-        android:layout_width="342dp"
-        android:layout_height="47dp"
-        android:ems="10"
-        android:gravity="top|left"
-        android:hint="@string/subject"
-        android:inputType="textMultiLine"
-        android:scrollbars="vertical"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/paraUsuarioTV"
-        app:layout_constraintVertical_bias="0.046" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
