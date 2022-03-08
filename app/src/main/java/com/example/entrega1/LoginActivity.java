@@ -3,17 +3,21 @@ package com.example.entrega1;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 
 public class LoginActivity extends AppCompatActivity {
 
+
+    private MiBD gestorDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        //Gestor base de datos
+        gestorDB = new MiBD(this, "Users", null, 1);
 
     }
 
