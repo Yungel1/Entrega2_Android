@@ -39,21 +39,21 @@ public class MiBD extends SQLiteOpenHelper {
     }
 
     public void registrarUsuario(String usuario, String contraseña, String email){
-        db.execSQL("INSERT INTO Usuarios(usuario,contraseña) VALUES ("+usuario+","+contraseña+','+
-                email+");");
+        db.execSQL("INSERT INTO Usuarios(usuario,contraseña,email) VALUES ('"+usuario+"','"+contraseña+"','"+
+                email+"');");
     }
 
     public void añadirUsuario(String usuarioAñade,String usuarioAñadido){
 
         db.execSQL("INSERT INTO Añadir(usuarioAñade,usuarioAñadido) " +
-                "VALUES ("+usuarioAñade+","+usuarioAñadido+" " +
+                "VALUES ('"+usuarioAñade+"','"+usuarioAñadido+"' " +
                 "WHERE NOT EXISTS (" +
-                "SELECT 1 FROM Añadir WHERE usuarioAñade="+usuarioAñade+" " +
-                "AND usuarioAñadido="+usuarioAñadido+"))");
+                "SELECT 1 FROM Añadir WHERE usuarioAñade='"+usuarioAñade+"' " +
+                "AND usuarioAñadido='"+usuarioAñadido+"'))");
     }
 
     public void cambiarEmail(String usuario,String email){
-        db.execSQL("UPDATE Usuarios SET email="+email+" WHERE usuario="+usuario+";");
+        db.execSQL("UPDATE Usuarios SET email='"+email+"' WHERE usuario='"+usuario+"';");
     }
 
     public int existeUsuario(String usuario){
@@ -62,8 +62,8 @@ public class MiBD extends SQLiteOpenHelper {
         int resultado;
 
         Cursor c = db.rawQuery("SELECT CASE WHEN EXISTS(" +
-                "SELECT usuario FROM Usuarios WHERE usuario="+usuario+
-                ") " +
+                "SELECT usuario FROM Usuarios WHERE usuario='"+usuario+
+                "') " +
                 "THEN 0 ELSE 1 END"
         ,null);
 
@@ -79,8 +79,8 @@ public class MiBD extends SQLiteOpenHelper {
         int resultado;
 
         Cursor c = db.rawQuery("SELECT CASE WHEN EXISTS(" +
-                        "SELECT usuario,contraseña FROM Usuarios WHERE usuario="+usuario+
-                        " AND contraseña="+contraseña+") " +
+                        "SELECT usuario,contraseña FROM Usuarios WHERE usuario='"+usuario+
+                        "' AND contraseña='"+contraseña+"') " +
                         "THEN 0 ELSE 1 END"
                 ,null);
 
@@ -95,7 +95,7 @@ public class MiBD extends SQLiteOpenHelper {
         ArrayList<String> listaUsuariosAñadidos = new ArrayList<String>();
 
         Cursor c = db.rawQuery("SELECT usuarioAñadido FROM Añadir " +
-                        "WHERE usuarioAñade="+usuarioAñade+";"
+                        "WHERE usuarioAñade='"+usuarioAñade+"';"
                 ,null);
 
         while(c.moveToNext()){
@@ -109,7 +109,7 @@ public class MiBD extends SQLiteOpenHelper {
         String email;
 
         Cursor c = db.rawQuery("SELECT email FROM Usuarios " +
-                        "WHERE usuario="+usuario+";"
+                        "WHERE usuario='"+usuario+"';"
                 ,null);
 
         c.moveToNext();

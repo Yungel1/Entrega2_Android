@@ -11,15 +11,19 @@
         android:theme="@style/Theme.Entrega1">
         <activity
             android:name=".MailActivity"
+            android:launchMode="singleTop"
             android:exported="false" />
         <activity
             android:name=".UsuariosActivity"
+            android:launchMode="singleTop"
             android:exported="false" />
         <activity
             android:name=".SignupActivity"
+            android:launchMode="singleTask"
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
+            android:launchMode="singleTask"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

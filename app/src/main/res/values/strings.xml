@@ -22,4 +22,7 @@
     <string name="body">Body</string>
     <string name="send">SEND</string>
     <string name="already_account">Already have an account?</string>
+    <string name="login_error">Wrong username/password</string>
+    <string name="signup_error">Username not available</string>
+    <string name="email_error">Insert a valid email</string>
 </resources>

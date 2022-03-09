@@ -23,4 +23,7 @@
     <string name="body">Cuerpo</string>
     <string name="send">ENVIAR</string>
     <string name="already_account">¿Ya tienes una cuenta?</string>
+    <string name="login_error">Usuario/contraseña incorrectos</string>
+    <string name="signup_error">Nombre de usuario no disponible</string>
+    <string name="email_error">Inserta un email válido</string>
 </resources>

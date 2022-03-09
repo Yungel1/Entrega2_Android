@@ -7,28 +7,38 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
 public class UsuariosActivity extends AppCompatActivity {
 
 
-    ListView lista;
-    Context context;
+    private ListView lista;
+    private Bundle extras;
+    private String usuario;
+    private MiBD gestorDB;
+    private AdaptadorListView eladap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_usuarios);
 
-        //Información para la lista
+        //Obtenemos el usuario desde la actividad login o signup
+        extras = getIntent().getExtras();
+        if (extras != null) {
+            usuario = extras.getString("usuario");
+        }
 
-        String[] progBotonLista={"boton1","boton2","boton3","boton3","boton3","boton3","boton3"};
-        String[] progNombreLista={"BANANA","COCO++","COCO++","COCO++","COCO++","COCO++","COCO++"};
+        //Información para la lista desde la base de datos
+        gestorDB = new MiBD(this, "Users", null, 1);
+        ArrayList<String> listaUsuarios = gestorDB.conseguirUsuariosAñadidos(usuario);
         int image = R.drawable.mail;
+
         //Asignación al listview
         lista = (ListView) findViewById(R.id.usersLIST);
-        AdaptadorListView eladap= new AdaptadorListView(getApplicationContext(),progBotonLista,progNombreLista,image);
+        eladap= new AdaptadorListView(getApplicationContext(),listaUsuarios,image);
         lista.setAdapter(eladap);
 
     }
@@ -42,6 +52,7 @@ public class UsuariosActivity extends AppCompatActivity {
     }
 
     public void onClickAñadir(View v){
+        eladap.notifyDataSetChanged();
         startActivity(new Intent(UsuariosActivity.this, MailActivity.class));
     }
 }
