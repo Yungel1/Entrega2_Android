@@ -25,4 +25,9 @@
     <string name="login_error">Wrong username/password</string>
     <string name="signup_error">Username not available</string>
     <string name="email_error">Insert a valid email</string>
+    <string name="already_on_list">User is already added</string>
+    <string name="user_not_exists">User does not exist</string>
+    <string name="email_changed">Email changed</string>
+    <string name="change_email">Change email</string>
+    <string name="actual_email">Actual email:</string>
 </resources>

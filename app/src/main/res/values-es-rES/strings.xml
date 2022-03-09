@@ -26,4 +26,9 @@
     <string name="login_error">Usuario/contraseña incorrectos</string>
     <string name="signup_error">Nombre de usuario no disponible</string>
     <string name="email_error">Inserta un email válido</string>
+    <string name="already_on_list">El usuario ya está añadido</string>
+    <string name="user_not_exists">El usuario no existe</string>
+    <string name="email_changed">Email cambiado</string>
+    <string name="change_email">Cambiar email</string>
+    <string name="actual_email">Email actual:</string>
 </resources>

@@ -46,14 +46,27 @@ public class MiBD extends SQLiteOpenHelper {
     public void añadirUsuario(String usuarioAñade,String usuarioAñadido){
 
         db.execSQL("INSERT INTO Añadir(usuarioAñade,usuarioAñadido) " +
-                "VALUES ('"+usuarioAñade+"','"+usuarioAñadido+"' " +
-                "WHERE NOT EXISTS (" +
-                "SELECT 1 FROM Añadir WHERE usuarioAñade='"+usuarioAñade+"' " +
-                "AND usuarioAñadido='"+usuarioAñadido+"'))");
+                "VALUES ('"+usuarioAñade+"','"+usuarioAñadido+"');");
+
     }
 
     public void cambiarEmail(String usuario,String email){
         db.execSQL("UPDATE Usuarios SET email='"+email+"' WHERE usuario='"+usuario+"';");
+    }
+
+    public int existeUsuarioAñadido(String usuarioAñade,String usuarioAñadido){
+        int resultado;
+
+        Cursor c = db.rawQuery("SELECT CASE WHEN EXISTS(" +
+                        "SELECT 1 FROM Añadir WHERE usuarioAñade='"+usuarioAñade+
+                        "' AND usuarioAñadido='"+usuarioAñadido+"') " +
+                        "THEN 0 ELSE 1 END"
+                ,null);
+
+        c.moveToNext();
+        resultado = c.getInt(0);
+
+        return resultado;
     }
 
     public int existeUsuario(String usuario){

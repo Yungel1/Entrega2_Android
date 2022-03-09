@@ -60,7 +60,7 @@ public class SignupActivity extends AppCompatActivity {
             gestorDB.registrarUsuario(usuario,contraseña,email);
 
             // y pasamos a la siguiente actividad
-            i = new Intent (SignupActivity.this, LoginActivity.class);
+            i = new Intent (SignupActivity.this, UsuariosActivity.class);
             i.putExtra("usuario",usuario);
             startActivity(i);
         } else{
@@ -76,7 +76,7 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     public void onClickIniciaSesion(View v){
-        Intent i = new Intent (SignupActivity.this, UsuariosActivity.class);
+        Intent i = new Intent (SignupActivity.this, LoginActivity.class);
         startActivity(i);
     }
 }
