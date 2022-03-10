@@ -131,5 +131,9 @@ public class MiBD extends SQLiteOpenHelper {
         c.close();
         return email;
     }
-
+    /*
+    public void borrarUsuario(String usuario){
+        db.execSQL("DELETE FROM Usuarios WHERE usuario='"+usuario+"';");
+    }
+    */
 }

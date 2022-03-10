@@ -55,7 +55,7 @@ public class SignupActivity extends AppCompatActivity {
             //si el mail no tiene un '@'
             toast = Toast.makeText(getApplicationContext(), errorEmail, duration);
             toast.show();
-        } else if(resultado==1){
+        } else if(resultado==1&&!usuario.equals("")){
             //Si es válido, guardamos los datos en la base de datos
             gestorDB.registrarUsuario(usuario,contraseña,email);
 
