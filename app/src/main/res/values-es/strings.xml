@@ -31,4 +31,6 @@
     <string name="email_changed">Email cambiado</string>
     <string name="change_email">Cambiar email</string>
     <string name="actual_email">Email actual:</string>
+    <string name="has_been_registered">Un nuevo usuario ha sido registrado en el sistema</string>
+    <string name="new_signup">Nuevo registro</string>
 </resources>

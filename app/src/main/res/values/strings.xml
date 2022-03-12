@@ -30,4 +30,6 @@
     <string name="email_changed">Email changed</string>
     <string name="change_email">Change email</string>
     <string name="actual_email">Actual email:</string>
+    <string name="has_been_registered">A new user has been registered in the system</string>
+    <string name="new_signup">New sign up</string>
 </resources>

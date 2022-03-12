@@ -38,7 +38,7 @@
         android:id="@+id/idiomaBTN"
         android:layout_width="64dp"
         android:layout_height="56dp"
-        android:onClick="onClickIdioma"
+        android:visibility="invisible"
         android:text="@string/idioma"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

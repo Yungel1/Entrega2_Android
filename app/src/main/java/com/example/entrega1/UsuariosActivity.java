@@ -6,16 +6,19 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class UsuariosActivity extends AppCompatActivity {
 
@@ -50,10 +53,6 @@ public class UsuariosActivity extends AppCompatActivity {
 
     }
 
-    public void onClickIdioma(View v){
-
-    }
-
     public void onClickCambiarEmail(View v){
         //Alerta para cambiar el email
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
@@ -62,7 +61,7 @@ public class UsuariosActivity extends AppCompatActivity {
         emailCambioET.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
         //Título y texto (email actual)
         alert.setTitle(R.string.change_email);
-        alert.setMessage(gestorDB.conseguirEmail(usuario));
+        alert.setMessage(getString(R.string.actual_email)+" "+gestorDB.conseguirEmail(usuario));
 
         alert.setView(emailCambioET);
 
@@ -139,4 +138,30 @@ public class UsuariosActivity extends AppCompatActivity {
         });
         alert.show();
     }
+
+    /*public void onClickIdioma(View v){
+        Button idiomaBTN = (Button)v;
+        //Saber a que idioma cambiar
+        String idiomaCambiar = idiomaBTN.getText().toString();
+
+        if (idiomaCambiar.equals("ES")){
+            idiomaCambiar = "es";
+        }
+        else{
+            idiomaCambiar = "en";
+        }
+
+        Locale nuevaloc = new Locale(idiomaCambiar);
+        Locale.setDefault(nuevaloc);
+        Configuration configuration =
+                getBaseContext().getResources().getConfiguration();
+        configuration.setLocale(nuevaloc);
+        configuration.setLayoutDirection(nuevaloc);
+
+        Context context = getBaseContext().createConfigurationContext(configuration);
+        getBaseContext().getResources().updateConfiguration(configuration, context.getResources().getDisplayMetrics());
+
+        finish();
+        startActivity(getIntent());
+    }*/
 }

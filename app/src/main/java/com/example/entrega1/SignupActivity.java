@@ -1,12 +1,23 @@
 package com.example.entrega1;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import java.util.Locale;
 
 
 public class SignupActivity extends AppCompatActivity {
@@ -21,6 +32,9 @@ public class SignupActivity extends AppCompatActivity {
     private EditText usuarioET;
     private EditText contraseñaET;
     private EditText emailET;
+
+    NotificationCompat.Builder elBuilder;
+    NotificationManager elManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +53,29 @@ public class SignupActivity extends AppCompatActivity {
         usuarioET = findViewById(R.id.usuarioET);
         contraseñaET = findViewById(R.id.contraseñaET);
         emailET = findViewById(R.id.emailET);
+
+        //Configuración de la notificación y canales
+        elBuilder = new NotificationCompat.Builder(this, "IdCanal");
+        elBuilder.setSmallIcon(android.R.drawable.stat_sys_warning)
+                .setContentTitle(getString(R.string.new_signup))
+                .setVibrate(new long[]{0, 1000, 500, 1000})
+                .setAutoCancel(true);
+        elManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+        this.createNotificationChannel();
+    }
+
+    private void createNotificationChannel() {
+        // Crear NotificationChannel, solo para la API 26+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel elCanal = new NotificationChannel("IdCanal", "NombreCanal",
+                    NotificationManager.IMPORTANCE_DEFAULT);
+
+            elCanal.enableLights(true);
+            elCanal.setLightColor(Color.RED);
+            elCanal.setVibrationPattern(new long[]{0, 1000, 500, 1000});
+            elCanal.enableVibration(true);
+            elManager.createNotificationChannel(elCanal);
+        }
     }
 
     public void onClickEntrar(View v){
@@ -59,6 +96,11 @@ public class SignupActivity extends AppCompatActivity {
             //Si es válido, guardamos los datos en la base de datos
             gestorDB.registrarUsuario(usuario,contraseña,email);
 
+            //Lanzamos la notificación de que se ha registrado
+            elBuilder.setStyle(new NotificationCompat.BigTextStyle()
+                    .bigText(getString(R.string.has_been_registered)+": "+usuario));
+            elManager.notify(1, elBuilder.build());
+
             // y pasamos a la siguiente actividad
             i = new Intent (SignupActivity.this, UsuariosActivity.class);
             i.putExtra("usuario",usuario);
@@ -71,12 +113,37 @@ public class SignupActivity extends AppCompatActivity {
 
     }
 
-    public void onClickIdioma(View v){
-
-    }
-
     public void onClickIniciaSesion(View v){
         Intent i = new Intent (SignupActivity.this, LoginActivity.class);
         startActivity(i);
     }
+
+    /*public void onClickIdioma(View v){
+
+        Button idiomaBTN = (Button)v;
+        //Saber a que idioma cambiar
+        String idiomaCambiar = idiomaBTN.getText().toString();
+
+        if (idiomaCambiar.equals("ES")){
+            idiomaCambiar = "es";
+        }
+        else{
+            idiomaCambiar = "en";
+        }
+
+        Locale nuevaloc = new Locale(idiomaCambiar);
+        Locale.setDefault(nuevaloc);
+        Configuration configuration =
+                getBaseContext().getResources().getConfiguration();
+        configuration.setLocale(nuevaloc);
+        configuration.setLayoutDirection(nuevaloc);
+
+        Context context = getBaseContext().createConfigurationContext(configuration);
+        getBaseContext().getResources().updateConfiguration(configuration, context.getResources().getDisplayMetrics());
+
+        finish();
+        startActivity(getIntent());
+    }*/
+
+
 }
