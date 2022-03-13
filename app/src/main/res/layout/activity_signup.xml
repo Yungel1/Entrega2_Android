@@ -10,7 +10,7 @@
         android:id="@+id/registrateTV"
         android:layout_width="229dp"
         android:layout_height="54dp"
-        android:gravity="center_vertical|left"
+        android:gravity="center_vertical|center_horizontal"
         android:text="@string/signup"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="30sp"

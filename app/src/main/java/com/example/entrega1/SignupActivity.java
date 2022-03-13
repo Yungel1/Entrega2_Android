@@ -2,11 +2,13 @@ package com.example.entrega1;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
+import androidx.preference.PreferenceManager;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Build;
@@ -38,6 +40,10 @@ public class SignupActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        int tema = this.getTema();
+        setTheme(tema);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
@@ -76,6 +82,22 @@ public class SignupActivity extends AppCompatActivity {
             elCanal.enableVibration(true);
             elManager.createNotificationChannel(elCanal);
         }
+    }
+
+    private int getTema(){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String color = prefs.getString("listPref",null);
+        int tema;
+        //Toast toast = Toast.makeText(getActivity(), "Ajustes guardados", Toast.LENGTH_LONG);
+        //toast.show();
+        switch (color) {
+            case "blue":
+                tema = R.style.Theme_TemaAzul;
+                break;
+            default:
+                tema = R.style.Theme_TemaNaranja;
+        }
+        return tema;
     }
 
     public void onClickEntrar(View v){

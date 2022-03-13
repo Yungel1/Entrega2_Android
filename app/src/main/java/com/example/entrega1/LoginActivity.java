@@ -53,7 +53,6 @@ public class LoginActivity extends AppCompatActivity implements LifecycleObserve
         setContentView(R.layout.activity_login);
         la = this;
 
-
         //Dejamos el toast preparado para el caso de usuario contraseña incorrectos
         error = getString(R.string.login_error);
         duration = Toast.LENGTH_SHORT;
@@ -65,15 +64,6 @@ public class LoginActivity extends AppCompatActivity implements LifecycleObserve
         //Obtenemos los elementos necesarios
         usuarioET = findViewById(R.id.usuarioET);
         contraseñaET = findViewById(R.id.contraseñaET);
-
-    }
-
-    @Override
-    protected void onResume() {
-
-
-        super.onResume();
-        //setContentView(R.layout.activity_login);
 
     }
 

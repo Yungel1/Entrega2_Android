@@ -1,8 +1,10 @@
 package com.example.entrega1;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -20,6 +22,10 @@ public class MailActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        int tema = this.getTema();
+        setTheme(tema);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mail);
 
@@ -40,6 +46,22 @@ public class MailActivity extends AppCompatActivity {
         email = gestorDB.conseguirEmail(usuario);
         emailTV.setText(email);
 
+    }
+
+    private int getTema(){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String color = prefs.getString("listPref",null);
+        int tema;
+        //Toast toast = Toast.makeText(getActivity(), "Ajustes guardados", Toast.LENGTH_LONG);
+        //toast.show();
+        switch (color) {
+            case "blue":
+                tema = R.style.Theme_TemaAzul;
+                break;
+            default:
+                tema = R.style.Theme_TemaNaranja;
+        }
+        return tema;
     }
 
     public void onClickEnviar(View v){
