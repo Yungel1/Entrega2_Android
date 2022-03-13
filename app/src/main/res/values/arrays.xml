@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="listArray">
+        <item>@string/orange</item>
+        <item>@string/blue</item>
+    </string-array>
+
+    <string-array name="listValues">
+        <item>orange</item>
+        <item>blue</item>
+    </string-array>
+</resources>

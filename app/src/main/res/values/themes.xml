@@ -13,4 +13,24 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="Theme.TemaNaranja" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/orange</item>
+        <item name="colorPrimaryDark">@color/orange</item>
+        <item name="android:textColorPrimary">@color/black</item>
+        <item name="colorAccent">@color/orange</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="android:navigationBarColor">@color/orange</item>
+        <item name="android:colorButtonNormal">@color/orange</item>
+    </style>
+
+    <style name="Theme.TemaAzul" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/blue</item>
+        <item name="colorPrimaryDark">@color/blue</item>
+        <item name="android:textColorPrimary">@color/black</item>
+        <item name="colorAccent">@color/light_blue</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="android:navigationBarColor">@color/blue</item>
+        <item name="android:colorButtonNormal">@color/light_blue</item>
+    </style>
 </resources>

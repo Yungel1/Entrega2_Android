@@ -1,9 +1,17 @@
 package com.example.entrega1;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.OnLifecycleEvent;
+import androidx.preference.PreferenceManager;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -21,7 +29,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements LifecycleObserver {
 
     private String error;
     private int duration;
@@ -31,12 +39,20 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText usuarioET;
     private EditText contraseñaET;
-    private Button idiomaBTN;
+
+    SharedPreferences prefs;
+    public static LoginActivity la;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        int tema = this.getTema();
+        setTheme(tema);
         super.onCreate(savedInstanceState);
+        //tema
         setContentView(R.layout.activity_login);
+        la = this;
+
 
         //Dejamos el toast preparado para el caso de usuario contraseña incorrectos
         error = getString(R.string.login_error);
@@ -49,8 +65,37 @@ public class LoginActivity extends AppCompatActivity {
         //Obtenemos los elementos necesarios
         usuarioET = findViewById(R.id.usuarioET);
         contraseñaET = findViewById(R.id.contraseñaET);
-        idiomaBTN = findViewById(R.id.idiomaBTN);
 
+    }
+
+    @Override
+    protected void onResume() {
+
+
+        super.onResume();
+        //setContentView(R.layout.activity_login);
+
+    }
+
+    private int getTema(){
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String color = prefs.getString("listPref",null);
+        int tema;
+        //Toast toast = Toast.makeText(getActivity(), "Ajustes guardados", Toast.LENGTH_LONG);
+        //toast.show();
+        switch (color) {
+            case "blue":
+                tema = R.style.Theme_TemaAzul;
+                break;
+            default:
+                tema = R.style.Theme_TemaNaranja;
+        }
+        return tema;
+    }
+
+    public void onClickColor(View v){
+        Intent i = new Intent (LoginActivity.this, PreferenceActivity.class);
+        startActivity(i);
     }
 
     public void onClickEntrar(View v){
