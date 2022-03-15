@@ -111,7 +111,7 @@
         android:layout_height="54dp"
         android:onClick="onClickColor"
         android:text="@string/color"
-        android:textSize="13sp"
+        android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="@+id/iniciaSesionTV"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.046"

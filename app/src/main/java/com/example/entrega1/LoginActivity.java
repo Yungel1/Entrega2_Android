@@ -46,11 +46,14 @@ public class LoginActivity extends AppCompatActivity implements LifecycleObserve
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        //Conseguir el tema desde las preferencias y aplicarlo
         int tema = this.getTema();
         setTheme(tema);
+
         super.onCreate(savedInstanceState);
-        //tema
         setContentView(R.layout.activity_login);
+
+        //Necesario para poder finalizar esta actividad desde otra actividad
         la = this;
 
         //Dejamos el toast preparado para el caso de usuario contraseña incorrectos
@@ -68,11 +71,14 @@ public class LoginActivity extends AppCompatActivity implements LifecycleObserve
     }
 
     private int getTema(){
+
+        //Obtener el tema desde las SharedPreferences
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String color = prefs.getString("listPref",null);
+        if (color==null){
+            color = "orange";
+        }
         int tema;
-        //Toast toast = Toast.makeText(getActivity(), "Ajustes guardados", Toast.LENGTH_LONG);
-        //toast.show();
         switch (color) {
             case "blue":
                 tema = R.style.Theme_TemaAzul;
@@ -121,7 +127,7 @@ public class LoginActivity extends AppCompatActivity implements LifecycleObserve
         else{
             idiomaCambiar = "en";
         }
-
+        //Cambiar idioma
         Locale nuevaloc = new Locale(idiomaCambiar);
         Locale.setDefault(nuevaloc);
         Configuration configuration =

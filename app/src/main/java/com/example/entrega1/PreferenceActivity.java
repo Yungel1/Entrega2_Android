@@ -12,11 +12,14 @@ public class PreferenceActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        //Conseguir el tema desde las preferencias y aplicarlo
         int tema = this.getTema();
         setTheme(tema);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preference);
+
+        //Iniciar fragmento Preferencias
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment,new Preferencias())
@@ -25,11 +28,16 @@ public class PreferenceActivity extends AppCompatActivity {
     }
 
     private int getTema(){
+
+        //Obtener el tema desde las SharedPreferences
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String color = prefs.getString("listPref",null);
         int tema;
-        //Toast toast = Toast.makeText(getActivity(), "Ajustes guardados", Toast.LENGTH_LONG);
-        //toast.show();
+
+        if (color==null){
+            color = "orange";
+        }
+
         switch (color) {
             case "blue":
                 tema = R.style.Theme_TemaAzul;

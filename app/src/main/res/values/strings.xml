@@ -34,7 +34,7 @@
     <string name="new_signup">New sign up</string>
     <string name="orange">Orange</string>
     <string name="blue">Blue</string>
-    <string name="color">Color</string>
+    <string name="color">Colour</string>
     <string name="select_theme">Select a theme/color for the application</string>
     <string name="color_application">Color for the application?</string>
 </resources>

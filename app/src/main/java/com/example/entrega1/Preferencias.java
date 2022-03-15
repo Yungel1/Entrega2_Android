@@ -19,24 +19,9 @@ import android.widget.Toast;
 public class Preferencias extends PreferenceFragmentCompat
         implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-    public static final String KEY_LIST_PREFERENCE = "listPref";
-
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.pref_config);
-    }
-
-    public void insertarPreferencia(SharedPreferences prefs,String color){
-
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(KEY_LIST_PREFERENCE, color);
-        editor.apply();
-    }
-
-    public String leerPreferencia(SharedPreferences prefs){
-
-        String color = prefs.getString(KEY_LIST_PREFERENCE,null);
-        return color;
     }
 
     @Override
@@ -52,20 +37,11 @@ public class Preferencias extends PreferenceFragmentCompat
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-        /*String color = this.leerPreferencia(sharedPreferences);
-        int tema;
-        //Toast toast = Toast.makeText(getActivity(), "Ajustes guardados", Toast.LENGTH_LONG);
-        //toast.show();
-        switch (color){
-            case "blue":
-                tema = R.style.Theme_TemaAzul;
-                break;
-            default:
-                tema = R.style.Theme_TemaNaranja;
-        }*/
-        LoginActivity.la.recreate();
+
+        //Si las preferencias cambiar, recrear la actividad principal
+        LoginActivity.la.finish();
         Intent i = new Intent (getActivity(), LoginActivity.class);
-        //i.putExtra("tema",tema);
+
         startActivity(i);
     }
 }

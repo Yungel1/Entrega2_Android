@@ -23,6 +23,7 @@ public class MailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        //Conseguir el tema desde las preferencias y aplicarlo
         int tema = this.getTema();
         setTheme(tema);
 
@@ -49,11 +50,15 @@ public class MailActivity extends AppCompatActivity {
     }
 
     private int getTema(){
+
+        //Obtener el tema desde las SharedPreferences
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String color = prefs.getString("listPref",null);
         int tema;
-        //Toast toast = Toast.makeText(getActivity(), "Ajustes guardados", Toast.LENGTH_LONG);
-        //toast.show();
+        if (color==null){
+            color = "orange";
+        }
+
         switch (color) {
             case "blue":
                 tema = R.style.Theme_TemaAzul;
