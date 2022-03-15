@@ -43,5 +43,8 @@ public class Preferencias extends PreferenceFragmentCompat
         Intent i = new Intent (getActivity(), LoginActivity.class);
 
         startActivity(i);
+
+        //Terminar PreferenceActivity
+        getActivity().finish();
     }
 }
