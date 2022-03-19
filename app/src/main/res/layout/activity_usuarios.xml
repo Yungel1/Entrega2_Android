@@ -60,13 +60,13 @@
 
     <ListView
         android:id="@+id/usersLIST"
-        android:layout_width="334dp"
-        android:layout_height="238dp"
+        android:layout_width="341dp"
+        android:layout_height="218dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/usuariosTV"
-        app:layout_constraintHorizontal_bias="0.523"
+        app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="@+id/usuariosTV"
         app:layout_constraintTop_toBottomOf="@+id/usuariosTV"
-        app:layout_constraintVertical_bias="0.067" />
+        app:layout_constraintVertical_bias="0.05" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

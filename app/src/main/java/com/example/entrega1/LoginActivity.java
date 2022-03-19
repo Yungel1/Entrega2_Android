@@ -43,6 +43,12 @@ public class LoginActivity extends AppCompatActivity implements LifecycleObserve
     SharedPreferences prefs;
     public static LoginActivity la;
 
+    public String idioma;
+
+    private Bundle extras;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -68,6 +74,18 @@ public class LoginActivity extends AppCompatActivity implements LifecycleObserve
         usuarioET = findViewById(R.id.usuarioET);
         contraseñaET = findViewById(R.id.contraseñaET);
 
+        //Coger el idioma
+        extras = getIntent().getExtras();
+        if (extras != null) {
+            idioma = extras.getString("idioma");
+            if(idioma!=null){
+                Locale nuevaloc = new Locale(idioma);
+                if(!nuevaloc.getLanguage().equals(getBaseContext().getResources().getConfiguration().locale.getLanguage())){
+                    cambiarIdioma();
+                }
+            }
+        }
+
     }
 
     private int getTema(){
@@ -91,7 +109,7 @@ public class LoginActivity extends AppCompatActivity implements LifecycleObserve
 
     public void onClickColor(View v){
         Intent i = new Intent (LoginActivity.this, PreferenceActivity.class);
-        startActivity(i);
+        startActivity(i.putExtra("idioma",idioma));
     }
 
     public void onClickEntrar(View v){
@@ -108,11 +126,12 @@ public class LoginActivity extends AppCompatActivity implements LifecycleObserve
             i = new Intent (LoginActivity.this, UsuariosActivity.class);
             i.putExtra("usuario",usuario);
             this.escribirFichero(usuario); //Escribimos en el fichero para saber que ha iniciado sesión
-            startActivity(i);
+            startActivity(i.putExtra("idioma",idioma));
         }else{
             //Si es incorrecto mostramos el toast
             toast.show();
         }
+
     }
 
     public void onClickIdioma(View v){
@@ -122,13 +141,18 @@ public class LoginActivity extends AppCompatActivity implements LifecycleObserve
         String idiomaCambiar = idiomaBTN.getText().toString();
 
         if (idiomaCambiar.equals("ES")){
-            idiomaCambiar = "es";
+            idioma = "es";
         }
         else{
-            idiomaCambiar = "en";
+            idioma = "en";
         }
+        cambiarIdioma();
+    }
+
+    private void cambiarIdioma() {
         //Cambiar idioma
-        Locale nuevaloc = new Locale(idiomaCambiar);
+        Locale nuevaloc = new Locale(idioma);
+
         Locale.setDefault(nuevaloc);
         Configuration configuration =
                 getBaseContext().getResources().getConfiguration();
@@ -139,12 +163,12 @@ public class LoginActivity extends AppCompatActivity implements LifecycleObserve
         getBaseContext().getResources().updateConfiguration(configuration, context.getResources().getDisplayMetrics());
 
         finish();
-        startActivity(getIntent());
+        startActivity(getIntent().putExtra("idioma", idioma));
     }
 
     public void onClickRegistrate(View v){
         Intent i = new Intent (LoginActivity.this, SignupActivity.class);
-        startActivity(i);
+        startActivity(i.putExtra("idioma",idioma));
     }
 
     private void escribirFichero(String usuario){
@@ -166,5 +190,22 @@ public class LoginActivity extends AppCompatActivity implements LifecycleObserve
         }
 
     }
+/*
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putString("idioma", idioma);
+
+    }
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        idioma = savedInstanceState.getString("idioma");
+        Toast.makeText(getApplicationContext(), idioma, duration).show();
+        if(idioma!=null){
+            Locale nuevaloc = new Locale(idioma);
+            if (nuevaloc!=Locale.getDefault()){
+                cambiarIdioma();
+            }
+        }
+    }*/
 
 }

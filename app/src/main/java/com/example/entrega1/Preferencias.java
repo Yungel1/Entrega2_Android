@@ -41,7 +41,7 @@ public class Preferencias extends PreferenceFragmentCompat
         //Si las preferencias cambiar, recrear la actividad principal
         LoginActivity.la.finish();
         Intent i = new Intent (getActivity(), LoginActivity.class);
-
+        i.putExtra("idioma",PreferenceActivity.idioma);
         startActivity(i);
 
         //Terminar PreferenceActivity

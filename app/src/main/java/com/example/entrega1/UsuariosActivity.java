@@ -32,6 +32,8 @@ public class UsuariosActivity extends AppCompatActivity {
     private AdaptadorListView eladap;
     ArrayList<String> listaUsuarios;
 
+    public static String idioma;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -46,6 +48,14 @@ public class UsuariosActivity extends AppCompatActivity {
         extras = getIntent().getExtras();
         if (extras != null) {
             usuario = extras.getString("usuario");
+            //Coger el idioma
+            idioma = extras.getString("idioma");
+            if(idioma!=null){
+                Locale nuevaloc = new Locale(idioma);
+                if(!nuevaloc.getLanguage().equals(getBaseContext().getResources().getConfiguration().locale.getLanguage())){
+                    cambiarIdioma();
+                }
+            }
         }
 
         //Información para la lista desde la base de datos
@@ -58,6 +68,23 @@ public class UsuariosActivity extends AppCompatActivity {
         eladap= new AdaptadorListView(getApplicationContext(),listaUsuarios,image);
         lista.setAdapter(eladap);
 
+    }
+
+    private void cambiarIdioma() {
+        //Cambiar idioma
+        Locale nuevaloc = new Locale(idioma);
+
+        Locale.setDefault(nuevaloc);
+        Configuration configuration =
+                getBaseContext().getResources().getConfiguration();
+        configuration.setLocale(nuevaloc);
+        configuration.setLayoutDirection(nuevaloc);
+
+        Context context = getBaseContext().createConfigurationContext(configuration);
+        getBaseContext().getResources().updateConfiguration(configuration, context.getResources().getDisplayMetrics());
+
+        finish();
+        startActivity(getIntent().putExtra("idioma", idioma));
     }
 
     private int getTema(){

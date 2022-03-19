@@ -64,7 +64,7 @@ public class AdaptadorListView extends BaseAdapter {
                 //Iniciar la siguiente actividad
                 Intent intent = new Intent(viewGroup.getContext(), MailActivity.class);
                 intent.putExtra("usuarioAñadido",usuarios.get(i));
-                viewGroup.getContext().startActivity(intent);
+                viewGroup.getContext().startActivity(intent.putExtra("idioma",UsuariosActivity.idioma));
             }
         });
 

@@ -3,12 +3,16 @@ package com.example.entrega1;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import java.util.Locale;
 
 public class MailActivity extends AppCompatActivity {
 
@@ -19,6 +23,8 @@ public class MailActivity extends AppCompatActivity {
     private Bundle extras;
     private MiBD gestorDB;
     String email;
+
+    private String idioma;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,11 +48,36 @@ public class MailActivity extends AppCompatActivity {
         if (extras != null) {
             usuario = extras.getString("usuarioAñadido");
             usuarioTV.setText(usuario);
+            //Coger el idioma
+            idioma = extras.getString("idioma");
+            if(idioma!=null){
+                Locale nuevaloc = new Locale(idioma);
+                if(!nuevaloc.getLanguage().equals(getBaseContext().getResources().getConfiguration().locale.getLanguage())){
+                    cambiarIdioma();
+                }
+            }
         }
         gestorDB = new MiBD(this, "Users", null, 1);
         email = gestorDB.conseguirEmail(usuario);
         emailTV.setText(email);
 
+    }
+
+    private void cambiarIdioma() {
+        //Cambiar idioma
+        Locale nuevaloc = new Locale(idioma);
+
+        Locale.setDefault(nuevaloc);
+        Configuration configuration =
+                getBaseContext().getResources().getConfiguration();
+        configuration.setLocale(nuevaloc);
+        configuration.setLayoutDirection(nuevaloc);
+
+        Context context = getBaseContext().createConfigurationContext(configuration);
+        getBaseContext().getResources().updateConfiguration(configuration, context.getResources().getDisplayMetrics());
+
+        finish();
+        startActivity(getIntent().putExtra("idioma", idioma));
     }
 
     private int getTema(){

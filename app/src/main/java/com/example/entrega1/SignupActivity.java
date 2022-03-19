@@ -35,8 +35,12 @@ public class SignupActivity extends AppCompatActivity {
     private EditText contraseñaET;
     private EditText emailET;
 
-    NotificationCompat.Builder elBuilder;
-    NotificationManager elManager;
+    private NotificationCompat.Builder elBuilder;
+    private NotificationManager elManager;
+
+    private Bundle extras;
+    private String idioma;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +73,35 @@ public class SignupActivity extends AppCompatActivity {
                 .setAutoCancel(true);
         elManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
         this.createNotificationChannel();
+
+        //Coger el idioma
+        extras = getIntent().getExtras();
+        if (extras != null) {
+            idioma = extras.getString("idioma");
+            if(idioma!=null){
+                Locale nuevaloc = new Locale(idioma);
+                if(!nuevaloc.getLanguage().equals(getBaseContext().getResources().getConfiguration().locale.getLanguage())){
+                    cambiarIdioma();
+                }
+            }
+        }
+    }
+
+    private void cambiarIdioma() {
+        //Cambiar idioma
+        Locale nuevaloc = new Locale(idioma);
+
+        Locale.setDefault(nuevaloc);
+        Configuration configuration =
+                getBaseContext().getResources().getConfiguration();
+        configuration.setLocale(nuevaloc);
+        configuration.setLayoutDirection(nuevaloc);
+
+        Context context = getBaseContext().createConfigurationContext(configuration);
+        getBaseContext().getResources().updateConfiguration(configuration, context.getResources().getDisplayMetrics());
+
+        finish();
+        startActivity(getIntent().putExtra("idioma", idioma));
     }
 
     private void createNotificationChannel() {
@@ -132,7 +165,7 @@ public class SignupActivity extends AppCompatActivity {
             // y pasamos a la siguiente actividad
             i = new Intent (SignupActivity.this, UsuariosActivity.class);
             i.putExtra("usuario",usuario);
-            startActivity(i);
+            startActivity(i.putExtra("idioma",idioma));
         } else{
             //Si es no es válido mostramos el toast de usuario no válido
             toast = Toast.makeText(getApplicationContext(), errorUsuario, duration);
