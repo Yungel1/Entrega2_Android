@@ -175,36 +175,9 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     public void onClickIniciaSesion(View v){
+        //Volver a la actividad de inicio de sesión
         Intent i = new Intent (SignupActivity.this, LoginActivity.class);
         startActivity(i);
     }
-
-    /*public void onClickIdioma(View v){
-
-        Button idiomaBTN = (Button)v;
-        //Saber a que idioma cambiar
-        String idiomaCambiar = idiomaBTN.getText().toString();
-
-        if (idiomaCambiar.equals("ES")){
-            idiomaCambiar = "es";
-        }
-        else{
-            idiomaCambiar = "en";
-        }
-
-        Locale nuevaloc = new Locale(idiomaCambiar);
-        Locale.setDefault(nuevaloc);
-        Configuration configuration =
-                getBaseContext().getResources().getConfiguration();
-        configuration.setLocale(nuevaloc);
-        configuration.setLayoutDirection(nuevaloc);
-
-        Context context = getBaseContext().createConfigurationContext(configuration);
-        getBaseContext().getResources().updateConfiguration(configuration, context.getResources().getDisplayMetrics());
-
-        finish();
-        startActivity(getIntent());
-    }*/
-
 
 }

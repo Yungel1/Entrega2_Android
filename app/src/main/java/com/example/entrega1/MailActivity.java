@@ -101,6 +101,8 @@ public class MailActivity extends AppCompatActivity {
     }
 
     public void onClickEnviar(View v){
+
+        //Intent implícito para mandar el email
         String[] emails = new String[] {email};
         String subject = asuntoET.getText().toString();
         String body = cuerpoET.getText().toString();

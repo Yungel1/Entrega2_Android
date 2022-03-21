@@ -193,30 +193,4 @@ public class UsuariosActivity extends AppCompatActivity {
         });
         alert.show();
     }
-
-    /*public void onClickIdioma(View v){
-        Button idiomaBTN = (Button)v;
-        //Saber a que idioma cambiar
-        String idiomaCambiar = idiomaBTN.getText().toString();
-
-        if (idiomaCambiar.equals("ES")){
-            idiomaCambiar = "es";
-        }
-        else{
-            idiomaCambiar = "en";
-        }
-
-        Locale nuevaloc = new Locale(idiomaCambiar);
-        Locale.setDefault(nuevaloc);
-        Configuration configuration =
-                getBaseContext().getResources().getConfiguration();
-        configuration.setLocale(nuevaloc);
-        configuration.setLayoutDirection(nuevaloc);
-
-        Context context = getBaseContext().createConfigurationContext(configuration);
-        getBaseContext().getResources().updateConfiguration(configuration, context.getResources().getDisplayMetrics());
-
-        finish();
-        startActivity(getIntent());
-    }*/
 }

@@ -108,6 +108,7 @@ public class LoginActivity extends AppCompatActivity implements LifecycleObserve
     }
 
     public void onClickColor(View v){
+        //Ir a la actividad que gestionará el cambio de color mediante preferencias
         Intent i = new Intent (LoginActivity.this, PreferenceActivity.class);
         startActivity(i.putExtra("idioma",idioma));
     }
@@ -167,6 +168,7 @@ public class LoginActivity extends AppCompatActivity implements LifecycleObserve
     }
 
     public void onClickRegistrate(View v){
+        //Ir a la actividad de registro
         Intent i = new Intent (LoginActivity.this, SignupActivity.class);
         startActivity(i.putExtra("idioma",idioma));
     }
@@ -190,22 +192,5 @@ public class LoginActivity extends AppCompatActivity implements LifecycleObserve
         }
 
     }
-/*
-    protected void onSaveInstanceState(Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
-        savedInstanceState.putString("idioma", idioma);
-
-    }
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        idioma = savedInstanceState.getString("idioma");
-        Toast.makeText(getApplicationContext(), idioma, duration).show();
-        if(idioma!=null){
-            Locale nuevaloc = new Locale(idioma);
-            if (nuevaloc!=Locale.getDefault()){
-                cambiarIdioma();
-            }
-        }
-    }*/
 
 }
