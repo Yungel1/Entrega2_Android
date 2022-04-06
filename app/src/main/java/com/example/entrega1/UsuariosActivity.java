@@ -1,7 +1,13 @@
 package com.example.entrega1;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.lifecycle.Observer;
 import androidx.preference.PreferenceManager;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkContinuation;
+import androidx.work.WorkInfo;
+import androidx.work.WorkManager;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -20,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class UsuariosActivity extends AppCompatActivity {
@@ -60,7 +67,7 @@ public class UsuariosActivity extends AppCompatActivity {
 
         //Información para la lista desde la base de datos
         gestorDB = new MiBD(this, "Users", null, 1);
-        listaUsuarios = gestorDB.conseguirUsuariosAñadidos(usuario);
+        listaUsuarios = gestorDB.conseguirUsuariosAñadidos(usuario,this);
         int image = R.drawable.mail;
 
         //Asignación al listview
@@ -116,7 +123,7 @@ public class UsuariosActivity extends AppCompatActivity {
         emailCambioET.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
         //Título y texto (email actual)
         alert.setTitle(R.string.change_email);
-        alert.setMessage(getString(R.string.actual_email)+" "+gestorDB.conseguirEmail(usuario));
+        alert.setMessage(getString(R.string.actual_email)+" "+gestorDB.conseguirEmail(usuario,this));
 
         alert.setView(emailCambioET);
 
@@ -157,32 +164,50 @@ public class UsuariosActivity extends AppCompatActivity {
         alert.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
-                //Mirar si ya existe el registro en Añadir
-                int resultadoAñadido = gestorDB.existeUsuarioAñadido(usuario,usuarioAñadidoET.getText().toString());
+                //lanzar el worker con la petición a la base de datos (comprobar si existe el usuario añadido)
+                OneTimeWorkRequest otwrAñadido = gestorDB.existeUsuarioAñadido(usuario,usuarioAñadidoET.getText().toString(),UsuariosActivity.this);
 
-                //Mirar si el usuario a añadir existe
-                int resultadoExiste = gestorDB.existeUsuario(usuarioAñadidoET.getText().toString());
+                //lanzar el worker con la petición a la base de datos (comprobar si existe el usuario)
+                OneTimeWorkRequest otwrUsuario = gestorDB.existeUsuario(usuario,UsuariosActivity.this);
 
-                if(resultadoAñadido==1 && resultadoExiste==0){
-                    gestorDB.añadirUsuario(usuario,usuarioAñadidoET.getText().toString());
-                    listaUsuarios.clear();
-                    listaUsuarios.addAll(gestorDB.conseguirUsuariosAñadidos(usuario));
-                    eladap.notifyDataSetChanged();
-                }
-                else if(resultadoExiste==1){
-                    //Si el usuario a añadir no existe
-                    String error = getString(R.string.user_not_exists);
-                    int duration = Toast.LENGTH_SHORT;
-                    Toast toast = Toast.makeText(getApplicationContext(), error, duration);
-                    toast.show();
-                }else{
-                    //Si ya se encuentra en la lista
-                    String error = getString(R.string.already_on_list);
-                    int duration = Toast.LENGTH_SHORT;
-                    Toast toast = Toast.makeText(getApplicationContext(), error, duration);
-                    toast.show();
-                }
+                //encadenar work
+                WorkContinuation syncChain = WorkManager.getInstance(UsuariosActivity.this)
+                        .beginWith(otwrAñadido)
+                        .then(otwrUsuario);
+                syncChain.enqueue();
 
+                //observar los cambios en la syncChain
+                syncChain.getWorkInfosLiveData()
+                        .observe(UsuariosActivity.this, new Observer<List<WorkInfo>>() {
+                            @Override
+                            public void onChanged(List<WorkInfo> workInfos) {
+                                if(workInfos.get(0) != null && workInfos.get(0).getState().isFinished() && workInfos.get(1) != null && workInfos.get(1).getState().isFinished()){
+
+                                    int resultadoAñadido = Integer.parseInt(workInfos.get(0).getOutputData().getString("resultado"));
+                                    int resultadoExiste = Integer.parseInt(workInfos.get(1).getOutputData().getString("resultado"));
+
+                                    if(resultadoAñadido==1 && resultadoExiste==0){
+                                        gestorDB.añadirUsuario(usuario,usuarioAñadidoET.getText().toString(),UsuariosActivity.this);
+                                        listaUsuarios.clear();
+                                        listaUsuarios.addAll(gestorDB.conseguirUsuariosAñadidos(usuario,UsuariosActivity.this));
+                                        eladap.notifyDataSetChanged();
+                                    }
+                                    else if(resultadoExiste==1){
+                                        //Si el usuario a añadir no existe
+                                        String error = getString(R.string.user_not_exists);
+                                        int duration = Toast.LENGTH_SHORT;
+                                        Toast toast = Toast.makeText(getApplicationContext(), error, duration);
+                                        toast.show();
+                                    }else{
+                                        //Si ya se encuentra en la lista
+                                        String error = getString(R.string.already_on_list);
+                                        int duration = Toast.LENGTH_SHORT;
+                                        Toast toast = Toast.makeText(getApplicationContext(), error, duration);
+                                        toast.show();
+                                    }
+                                }
+                            }
+                        });
             }
         });
         alert.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {

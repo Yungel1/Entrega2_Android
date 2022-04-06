@@ -58,7 +58,7 @@ public class MailActivity extends AppCompatActivity {
             }
         }
         gestorDB = new MiBD(this, "Users", null, 1);
-        email = gestorDB.conseguirEmail(usuario);
+        email = gestorDB.conseguirEmail(usuario,this);
         emailTV.setText(email);
 
     }

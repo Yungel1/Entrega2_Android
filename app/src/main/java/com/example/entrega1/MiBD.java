@@ -4,14 +4,29 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.work.Data;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkInfo;
+import androidx.work.WorkManager;
+
+import com.example.entrega1.workers.AñadirUsuarioWorker;
+import com.example.entrega1.workers.ExisteUsuarioAñadidoWorker;
+import com.example.entrega1.workers.ExisteUsuarioWorker;
+import com.example.entrega1.workers.RegistrarUsuarioWorker;
 
 import java.util.ArrayList;
 
 public class MiBD extends SQLiteOpenHelper {
 
     private SQLiteDatabase db;
+
+    public String result;
 
     public MiBD(@Nullable Context context, @Nullable String name,
                 @Nullable SQLiteDatabase.CursorFactory factory, int version) {
@@ -38,23 +53,40 @@ public class MiBD extends SQLiteOpenHelper {
 
     }
 
-    public void registrarUsuario(String usuario, String contraseña, String email){
-        db.execSQL("INSERT INTO Usuarios(usuario,contraseña,email) VALUES ('"+usuario+"','"+contraseña+"','"+
-                email+"');");
+    public void registrarUsuario(String usuario, String contraseña, String email,Context context){
+
+        Data datos = new Data.Builder().putString("usuario",usuario)
+                .putString("contraseña",contraseña).putString("email",email).build();
+        OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(RegistrarUsuarioWorker.class).setInputData(datos).build();
+        WorkManager.getInstance(context).enqueue(otwr);
+        /*db.execSQL("INSERT INTO Usuarios(usuario,contraseña,email) VALUES ('"+usuario+"','"+contraseña+"','"+
+                email+"');");*/
     }
 
-    public void añadirUsuario(String usuarioAñade,String usuarioAñadido){
+    public void añadirUsuario(String usuarioAñade,String usuarioAñadido,Context context){
 
-        db.execSQL("INSERT INTO Añadir(usuarioAñade,usuarioAñadido) " +
-                "VALUES ('"+usuarioAñade+"','"+usuarioAñadido+"');");
-
+        Data datos = new Data.Builder().putString("usuarioAñade",usuarioAñade)
+                .putString("usuarioAñadido",usuarioAñadido).build();
+        OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(AñadirUsuarioWorker.class).setInputData(datos).build();
+        WorkManager.getInstance(context).enqueue(otwr);
+        /* db.execSQL("INSERT INTO Añadir(usuarioAñade,usuarioAñadido) " +
+                 "VALUES ('"+usuarioAñade+"','"+usuarioAñadido+"');");*/
     }
 
     public void cambiarEmail(String usuario,String email){
         db.execSQL("UPDATE Usuarios SET email='"+email+"' WHERE usuario='"+usuario+"';");
     }
 
-    public int existeUsuarioAñadido(String usuarioAñade,String usuarioAñadido){
+    public OneTimeWorkRequest existeUsuarioAñadido(String usuarioAñade,String usuarioAñadido,Context context){
+
+        Data datos = new Data.Builder().putString("usuarioAñade",usuarioAñade)
+                .putString("usuarioAñadido",usuarioAñadido).build();
+        OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(ExisteUsuarioAñadidoWorker.class).setInputData(datos).build();
+        WorkManager.getInstance(context).enqueue(otwr);
+
+        return otwr;
+
+        /*
         int resultado;
 
         Cursor c = db.rawQuery("SELECT CASE WHEN EXISTS(" +
@@ -66,12 +98,19 @@ public class MiBD extends SQLiteOpenHelper {
         c.moveToNext();
         resultado = c.getInt(0);
 
-        return resultado;
+        return resultado;*/
     }
 
-    public int existeUsuario(String usuario){
-        //si usuario existe, devuelve 0, sino 1
+    public OneTimeWorkRequest existeUsuario(String usuario,Context context){
 
+        Data datos = new Data.Builder().putString("usuario",usuario).build();
+        OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(ExisteUsuarioWorker.class).setInputData(datos).build();
+        WorkManager.getInstance(context).enqueue(otwr);
+
+        return otwr;
+
+        //si usuario existe, devuelve 0, sino 1
+        /*
         int resultado;
 
         Cursor c = db.rawQuery("SELECT CASE WHEN EXISTS(" +
@@ -84,9 +123,10 @@ public class MiBD extends SQLiteOpenHelper {
         resultado = c.getInt(0);
 
         return resultado;
+        */
     }
 
-    public int existenUsuarioContraseña(String usuario,String contraseña){
+    public int existenUsuarioContraseña(String usuario,String contraseña,Context context){
         //si usuario y contraseña existen, devuelve 0, sino 1
 
         int resultado;
@@ -103,7 +143,7 @@ public class MiBD extends SQLiteOpenHelper {
         return resultado;
     }
 
-    public ArrayList<String> conseguirUsuariosAñadidos(String usuarioAñade){
+    public ArrayList<String> conseguirUsuariosAñadidos(String usuarioAñade,Context context){
 
         ArrayList<String> listaUsuariosAñadidos = new ArrayList<String>();
 
@@ -118,7 +158,7 @@ public class MiBD extends SQLiteOpenHelper {
         return listaUsuariosAñadidos;
     }
 
-    public String conseguirEmail(String usuario){
+    public String conseguirEmail(String usuario,Context context){
         String email;
 
         Cursor c = db.rawQuery("SELECT email FROM Usuarios " +

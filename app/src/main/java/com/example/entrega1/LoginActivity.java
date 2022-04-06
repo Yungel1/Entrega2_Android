@@ -120,7 +120,7 @@ public class LoginActivity extends AppCompatActivity implements LifecycleObserve
         String contraseña = contraseñaET.getText().toString();
         Intent i;
 
-        int resultado = gestorDB.existenUsuarioContraseña(usuario,contraseña);
+        int resultado = gestorDB.existenUsuarioContraseña(usuario,contraseña,this);
 
         if(resultado==0){
             //Si es correcto pasamos a la siguiente actividad

@@ -2,7 +2,11 @@ package com.example.entrega1;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
+import androidx.lifecycle.Observer;
 import androidx.preference.PreferenceManager;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkInfo;
+import androidx.work.WorkManager;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -145,32 +149,44 @@ public class SignupActivity extends AppCompatActivity {
         String usuario = usuarioET.getText().toString();
         String contraseña = contraseñaET.getText().toString();
         String email = emailET.getText().toString();
-        Intent i;
 
-        int resultado = gestorDB.existeUsuario(usuario);
+        //lanzar el worker con la petición a la base de datos
+        OneTimeWorkRequest otwr = gestorDB.existeUsuario(usuario,this);
+        //observar los cambios en el work
+        WorkManager.getInstance(this).getWorkInfoByIdLiveData(otwr.getId())
+                .observe(this, new Observer<WorkInfo>() {
+                    @Override
+                    public void onChanged(WorkInfo workInfo) {
+                        if(workInfo != null && workInfo.getState().isFinished()){
+                            //Obtener el resultado de la petición (si existe o no el usuario en la base de datos)
+                            int resultado = Integer.parseInt(workInfo.getOutputData().getString("resultado"));
+                            //Diferentes aciones según el resultado
+                            Intent i;
+                            if(!email.contains("@")){
+                                //si el mail no tiene un '@'
+                                toast = Toast.makeText(getApplicationContext(), errorEmail, duration);
+                                toast.show();
+                            } else if(resultado==1&&!usuario.equals("")){
+                                //Si es válido, guardamos los datos en la base de datos
+                                gestorDB.registrarUsuario(usuario,contraseña,email,SignupActivity.this);
 
-        if(!email.contains("@")){
-            //si el mail no tiene un '@'
-            toast = Toast.makeText(getApplicationContext(), errorEmail, duration);
-            toast.show();
-        } else if(resultado==1&&!usuario.equals("")){
-            //Si es válido, guardamos los datos en la base de datos
-            gestorDB.registrarUsuario(usuario,contraseña,email);
+                                //Lanzamos la notificación de que se ha registrado
+                                elBuilder.setStyle(new NotificationCompat.BigTextStyle()
+                                        .bigText(getString(R.string.has_been_registered)+": "+usuario));
+                                elManager.notify(1, elBuilder.build());
 
-            //Lanzamos la notificación de que se ha registrado
-            elBuilder.setStyle(new NotificationCompat.BigTextStyle()
-                    .bigText(getString(R.string.has_been_registered)+": "+usuario));
-            elManager.notify(1, elBuilder.build());
-
-            // y pasamos a la siguiente actividad
-            i = new Intent (SignupActivity.this, UsuariosActivity.class);
-            i.putExtra("usuario",usuario);
-            startActivity(i.putExtra("idioma",idioma));
-        } else{
-            //Si es no es válido mostramos el toast de usuario no válido
-            toast = Toast.makeText(getApplicationContext(), errorUsuario, duration);
-            toast.show();
-        }
+                                // y pasamos a la siguiente actividad
+                                i = new Intent (SignupActivity.this, UsuariosActivity.class);
+                                i.putExtra("usuario",usuario);
+                                startActivity(i.putExtra("idioma",idioma));
+                            } else{
+                                //Si es no es válido mostramos el toast de usuario no válido
+                                toast = Toast.makeText(getApplicationContext(), errorUsuario, duration);
+                                toast.show();
+                            }
+                        }
+                    }
+                });
 
     }
 
