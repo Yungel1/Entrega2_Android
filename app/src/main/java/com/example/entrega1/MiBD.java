@@ -16,8 +16,11 @@ import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
 import com.example.entrega1.workers.AñadirUsuarioWorker;
+import com.example.entrega1.workers.ConseguirEmailWorker;
+import com.example.entrega1.workers.ConseguirUsuariosAñadidosWorker;
 import com.example.entrega1.workers.ExisteUsuarioAñadidoWorker;
 import com.example.entrega1.workers.ExisteUsuarioWorker;
+import com.example.entrega1.workers.ExistenUsuarioContraseñaWorker;
 import com.example.entrega1.workers.RegistrarUsuarioWorker;
 
 import java.util.ArrayList;
@@ -63,25 +66,28 @@ public class MiBD extends SQLiteOpenHelper {
                 email+"');");*/
     }
 
-    public void añadirUsuario(String usuarioAñade,String usuarioAñadido,Context context){
+    public OneTimeWorkRequest añadirUsuario(String usuarioAñade,String usuarioAñadido,Context context){
 
         Data datos = new Data.Builder().putString("usuarioAñade",usuarioAñade)
                 .putString("usuarioAñadido",usuarioAñadido).build();
         OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(AñadirUsuarioWorker.class).setInputData(datos).build();
         WorkManager.getInstance(context).enqueue(otwr);
+
+        return otwr;
+
         /* db.execSQL("INSERT INTO Añadir(usuarioAñade,usuarioAñadido) " +
                  "VALUES ('"+usuarioAñade+"','"+usuarioAñadido+"');");*/
     }
 
-    public void cambiarEmail(String usuario,String email){
+    /*public void cambiarEmail(String usuario,String email){
         db.execSQL("UPDATE Usuarios SET email='"+email+"' WHERE usuario='"+usuario+"';");
-    }
+    }*/
 
     public OneTimeWorkRequest existeUsuarioAñadido(String usuarioAñade,String usuarioAñadido,Context context){
 
         Data datos = new Data.Builder().putString("usuarioAñade",usuarioAñade)
                 .putString("usuarioAñadido",usuarioAñadido).build();
-        OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(ExisteUsuarioAñadidoWorker.class).setInputData(datos).build();
+        OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(ExisteUsuarioAñadidoWorker.class).setInputData(datos).addTag("existeUsuarioAñadido").build();
         WorkManager.getInstance(context).enqueue(otwr);
 
         return otwr;
@@ -104,7 +110,7 @@ public class MiBD extends SQLiteOpenHelper {
     public OneTimeWorkRequest existeUsuario(String usuario,Context context){
 
         Data datos = new Data.Builder().putString("usuario",usuario).build();
-        OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(ExisteUsuarioWorker.class).setInputData(datos).build();
+        OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(ExisteUsuarioWorker.class).setInputData(datos).addTag("existeUsuario").build();
         WorkManager.getInstance(context).enqueue(otwr);
 
         return otwr;
@@ -126,7 +132,15 @@ public class MiBD extends SQLiteOpenHelper {
         */
     }
 
-    public int existenUsuarioContraseña(String usuario,String contraseña,Context context){
+    public OneTimeWorkRequest existenUsuarioContraseña(String usuario,String contraseña,Context context){
+
+        Data datos = new Data.Builder().putString("usuario",usuario).putString("contraseña",contraseña).build();
+        OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(ExistenUsuarioContraseñaWorker.class).setInputData(datos).build();
+        WorkManager.getInstance(context).enqueue(otwr);
+
+        return otwr;
+
+        /*
         //si usuario y contraseña existen, devuelve 0, sino 1
 
         int resultado;
@@ -140,12 +154,18 @@ public class MiBD extends SQLiteOpenHelper {
         c.moveToNext();
         resultado = c.getInt(0);
         c.close();
-        return resultado;
+        return resultado;*/
     }
 
-    public ArrayList<String> conseguirUsuariosAñadidos(String usuarioAñade,Context context){
+    public OneTimeWorkRequest conseguirUsuariosAñadidos(String usuarioAñade,Context context){
 
-        ArrayList<String> listaUsuariosAñadidos = new ArrayList<String>();
+        Data datos = new Data.Builder().putString("usuarioAñade",usuarioAñade).build();
+        OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(ConseguirUsuariosAñadidosWorker.class).setInputData(datos).build();
+        WorkManager.getInstance(context).enqueue(otwr);
+
+        return otwr;
+
+        /*ArrayList<String> listaUsuariosAñadidos = new ArrayList<String>();
 
         Cursor c = db.rawQuery("SELECT usuarioAñadido FROM Añadir " +
                         "WHERE usuarioAñade='"+usuarioAñade+"';"
@@ -155,10 +175,19 @@ public class MiBD extends SQLiteOpenHelper {
             listaUsuariosAñadidos.add(c.getString(0));
         }
         c.close();
-        return listaUsuariosAñadidos;
+        return listaUsuariosAñadidos;*/
     }
 
-    public String conseguirEmail(String usuario,Context context){
+    public OneTimeWorkRequest conseguirEmail(String usuario,Context context){
+
+        Data datos = new Data.Builder().putString("usuario",usuario).build();
+        OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(ConseguirEmailWorker.class).setInputData(datos).build();
+        WorkManager.getInstance(context).enqueue(otwr);
+
+        return otwr;
+
+
+        /*
         String email;
 
         Cursor c = db.rawQuery("SELECT email FROM Usuarios " +
@@ -169,8 +198,9 @@ public class MiBD extends SQLiteOpenHelper {
         email = c.getString(0);
 
         c.close();
-        return email;
+        return email;*/
     }
+
     /*
     public void borrarUsuario(String usuario){
         db.execSQL("DELETE FROM Usuarios WHERE usuario='"+usuario+"';");

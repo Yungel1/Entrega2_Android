@@ -1,7 +1,12 @@
 package com.example.entrega1;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.lifecycle.Observer;
 import androidx.preference.PreferenceManager;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkInfo;
+import androidx.work.WorkManager;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +16,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Locale;
 
@@ -58,9 +64,22 @@ public class MailActivity extends AppCompatActivity {
             }
         }
         gestorDB = new MiBD(this, "Users", null, 1);
-        email = gestorDB.conseguirEmail(usuario,this);
-        emailTV.setText(email);
 
+        //lanzar el worker con la petición a la base de datos  (conseguir email)
+        OneTimeWorkRequest otwr = gestorDB.conseguirEmail(usuario,this);
+        //observar los cambios en el work
+        WorkManager.getInstance(this).getWorkInfoByIdLiveData(otwr.getId())
+                .observe(this, new Observer<WorkInfo>() {
+                    @Override
+                    public void onChanged(WorkInfo workInfo) {
+                        if(workInfo != null && workInfo.getState().isFinished()){
+                            //Obtener el resultado de la petición (si existe o no el usuario en la base de datos)
+                            email = workInfo.getOutputData().getString("email");
+                            emailTV.setText(email);
+
+                        }
+                    }
+                });
     }
 
     private void cambiarIdioma() {

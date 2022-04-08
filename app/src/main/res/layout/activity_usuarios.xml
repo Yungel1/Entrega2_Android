@@ -25,7 +25,7 @@
         android:id="@+id/editarEmailBTN"
         android:layout_width="223dp"
         android:layout_height="56dp"
-        android:onClick="onClickCambiarEmail"
+        android:visibility="invisible"
         android:text="@string/edit_email"
         app:layout_constraintBottom_toBottomOf="@+id/idiomaBTN"
         app:layout_constraintEnd_toStartOf="@+id/idiomaBTN"

@@ -1,11 +1,16 @@
 package com.example.entrega1;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.OnLifecycleEvent;
 import androidx.preference.PreferenceManager;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkInfo;
+import androidx.work.WorkManager;
 
 import android.content.Context;
 import android.content.Intent;
@@ -118,20 +123,32 @@ public class LoginActivity extends AppCompatActivity implements LifecycleObserve
         //Comprobar que son correctos usuario y contraseña
         String usuario = usuarioET.getText().toString();
         String contraseña = contraseñaET.getText().toString();
-        Intent i;
 
-        int resultado = gestorDB.existenUsuarioContraseña(usuario,contraseña,this);
-
-        if(resultado==0){
-            //Si es correcto pasamos a la siguiente actividad
-            i = new Intent (LoginActivity.this, UsuariosActivity.class);
-            i.putExtra("usuario",usuario);
-            this.escribirFichero(usuario); //Escribimos en el fichero para saber que ha iniciado sesión
-            startActivity(i.putExtra("idioma",idioma));
-        }else{
-            //Si es incorrecto mostramos el toast
-            toast.show();
-        }
+        //lanzar el worker con la petición a la base de datos
+        OneTimeWorkRequest otwr = gestorDB.existenUsuarioContraseña(usuario,contraseña,this);
+        //observar los cambios en el work
+        WorkManager.getInstance(this).getWorkInfoByIdLiveData(otwr.getId())
+                .observe(this, new Observer<WorkInfo>() {
+                    @Override
+                    public void onChanged(WorkInfo workInfo) {
+                        if(workInfo != null && workInfo.getState().isFinished()){
+                            Intent i;
+                            //Obtener el resultado de la petición (si existe un usuario-contraseña en la base de datos)
+                            int resultado = Integer.parseInt(workInfo.getOutputData().getString("resultado"));
+                            //Diferentes aciones según el resultado
+                            if(resultado==0){
+                                //Si es correcto pasamos a la siguiente actividad
+                                i = new Intent (LoginActivity.this, UsuariosActivity.class);
+                                i.putExtra("usuario",usuario);
+                                escribirFichero(usuario); //Escribimos en el fichero para saber que ha iniciado sesión
+                                startActivity(i.putExtra("idioma",idioma));
+                            }else{
+                                //Si es incorrecto mostramos el toast
+                                toast.show();
+                            }
+                        }
+                    }
+                });
 
     }
 
