@@ -80,7 +80,7 @@ public class UsuariosActivity extends AppCompatActivity {
                         if(workInfo != null && workInfo.getState().isFinished()){
 
                             String listaString = workInfo.getOutputData().getString("datos");
-                            if (listaString!=null) {
+                            if (!listaString.equals("[]")) {
                                 //Convertir el string en array de nuevo
                                 String[] strings = listaString.substring(1, listaString.length() - 1).split(",");
                                 for (int i = 1; i < strings.length; i++) {

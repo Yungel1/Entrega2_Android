@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.lifecycle.Observer;
 import androidx.preference.PreferenceManager;
+import androidx.work.Data;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
@@ -22,6 +23,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.entrega1.workers.RegistrarUsuarioWorker;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import java.util.Locale;
 
@@ -70,12 +76,14 @@ public class SignupActivity extends AppCompatActivity {
         emailET = findViewById(R.id.emailET);
 
         //Configuración de la notificación y canales
+        /*
         elBuilder = new NotificationCompat.Builder(this, "IdCanal");
         elBuilder.setSmallIcon(android.R.drawable.stat_sys_warning)
                 .setContentTitle(getString(R.string.new_signup))
                 .setVibrate(new long[]{0, 1000, 500, 1000})
                 .setAutoCancel(true);
         elManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+        */
         this.createNotificationChannel();
 
         //Coger el idioma
@@ -167,13 +175,26 @@ public class SignupActivity extends AppCompatActivity {
                                 toast = Toast.makeText(getApplicationContext(), errorEmail, duration);
                                 toast.show();
                             } else if(resultado==1&&!usuario.equals("")){
+
+                                FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(SignupActivity.this,new OnSuccessListener<InstanceIdResult>() {
+                                    @Override
+                                    public void onSuccess(InstanceIdResult instanceIdResult) {
+                                        String newToken = instanceIdResult.getToken();
+
+                                        Data datos = new Data.Builder().putString("token",newToken)
+                                                .putString("titulo_noti",getString(R.string.new_signup)).putString("texto_noti",getString(R.string.has_been_registered)).build();
+                                        OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(RegistrarUsuarioWorker.class).setInputData(datos).build();
+                                        WorkManager.getInstance(SignupActivity.this).enqueue(otwr);
+                                    }
+                                });
+
                                 //Si es válido, guardamos los datos en la base de datos
                                 gestorDB.registrarUsuario(usuario,contraseña,email,SignupActivity.this);
-
+                                /*
                                 //Lanzamos la notificación de que se ha registrado
                                 elBuilder.setStyle(new NotificationCompat.BigTextStyle()
                                         .bigText(getString(R.string.has_been_registered)+": "+usuario));
-                                elManager.notify(1, elBuilder.build());
+                                elManager.notify(1, elBuilder.build());*/
 
                                 // y pasamos a la siguiente actividad
                                 i = new Intent (SignupActivity.this, UsuariosActivity.class);

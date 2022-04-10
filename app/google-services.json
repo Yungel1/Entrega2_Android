@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "290877347747",
+    "project_id": "das-notificacion",
+    "storage_bucket": "das-notificacion.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:290877347747:android:a354cd64d0f00373712c16",
+        "android_client_info": {
+          "package_name": "com.example.entrega1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "290877347747-s06pug6u653c5qkfq5tqbtu98grq0bo7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCns-RoIraN2TBjjN7HWP-XQIIirBHXGn0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "290877347747-s06pug6u653c5qkfq5tqbtu98grq0bo7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

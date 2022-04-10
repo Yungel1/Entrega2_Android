@@ -58,6 +58,7 @@ public class ConseguirUsuariosAñadidosWorker extends Worker {
                 while ((line = bufferedReader.readLine()) != null) {
                     result += line;
                 }
+
                 JSONArray jsonArray = new JSONArray(result);
                 ArrayList<String> lista = new ArrayList<>();
                 for(int i = 0; i < jsonArray.length(); i++)
