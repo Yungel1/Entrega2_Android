@@ -51,7 +51,7 @@ public class MailActivity extends AppCompatActivity {
 
     static final int CODIGO_FOTO_ARCHIVO = 1;
     Uri uriimagen = null;
-    Bitmap bitmapredimensionado;
+    Bitmap bitmapredimensionado = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +103,13 @@ public class MailActivity extends AppCompatActivity {
                         }
                     }
                 });
+
+        //Conseguir imagen para el ImageButton en caso de girar la pantalla por ejemplo
+        if (savedInstanceState != null){
+            bitmapredimensionado = savedInstanceState.getParcelable("bitmap");
+            botonImagen.setImageBitmap(bitmapredimensionado);
+        }
+
     }
 
     //Para obtener el bitmap que nos viene del intent para sacar la foto
@@ -152,6 +159,13 @@ public class MailActivity extends AppCompatActivity {
 
             gestorDB.insertarFoto(uriimagen.toString(),anchoDestino,altoDestino,this);
 
+        }
+    }
+
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (bitmapredimensionado != null) {
+            outState.putParcelable("bitmap", bitmapredimensionado);
         }
     }
 
