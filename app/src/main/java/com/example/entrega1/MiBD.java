@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -21,6 +22,7 @@ import com.example.entrega1.workers.ConseguirUsuariosAñadidosWorker;
 import com.example.entrega1.workers.ExisteUsuarioAñadidoWorker;
 import com.example.entrega1.workers.ExisteUsuarioWorker;
 import com.example.entrega1.workers.ExistenUsuarioContraseñaWorker;
+import com.example.entrega1.workers.InsertarFotoWorker;
 import com.example.entrega1.workers.RegistrarUsuarioWorker;
 
 import java.util.ArrayList;
@@ -199,6 +201,15 @@ public class MiBD extends SQLiteOpenHelper {
 
         c.close();
         return email;*/
+    }
+
+    public void insertarFoto(String uriString,int ancho, int alto, Context context){
+
+        Data datos = new Data.Builder().putString("uriString",uriString)
+                .putInt("ancho",ancho).putInt("alto",alto).build();
+        OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(InsertarFotoWorker.class).setInputData(datos).build();
+        WorkManager.getInstance(context).enqueue(otwr);
+
     }
 
     /*

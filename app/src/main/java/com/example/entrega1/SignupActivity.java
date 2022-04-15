@@ -24,6 +24,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.entrega1.workers.FCM_notificacionWorker;
 import com.example.entrega1.workers.RegistrarUsuarioWorker;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -84,7 +85,6 @@ public class SignupActivity extends AppCompatActivity {
                 .setAutoCancel(true);
         elManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
         */
-        this.createNotificationChannel();
 
         //Coger el idioma
         extras = getIntent().getExtras();
@@ -116,6 +116,7 @@ public class SignupActivity extends AppCompatActivity {
         startActivity(getIntent().putExtra("idioma", idioma));
     }
 
+    /*
     private void createNotificationChannel() {
         // Crear NotificationChannel, solo para la API 26+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -128,7 +129,7 @@ public class SignupActivity extends AppCompatActivity {
             elCanal.enableVibration(true);
             elManager.createNotificationChannel(elCanal);
         }
-    }
+    }*/
 
     private int getTema(){
 
@@ -182,8 +183,8 @@ public class SignupActivity extends AppCompatActivity {
                                         String newToken = instanceIdResult.getToken();
 
                                         Data datos = new Data.Builder().putString("token",newToken)
-                                                .putString("titulo_noti",getString(R.string.new_signup)).putString("texto_noti",getString(R.string.has_been_registered)).build();
-                                        OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(RegistrarUsuarioWorker.class).setInputData(datos).build();
+                                                .putString("titulo_noti",getString(R.string.new_signup)).putString("texto_noti",getString(R.string.has_been_registered)+": "+usuario).build();
+                                        OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(FCM_notificacionWorker.class).setInputData(datos).build();
                                         WorkManager.getInstance(SignupActivity.this).enqueue(otwr);
                                     }
                                 });
