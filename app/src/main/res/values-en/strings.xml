@@ -38,4 +38,5 @@
     <string name="color">Colour</string>
     <string name="select_theme">Select a theme/color for the application</string>
     <string name="color_application">Color for the application?</string>
+    <string name="Map">Map</string>
 </resources>

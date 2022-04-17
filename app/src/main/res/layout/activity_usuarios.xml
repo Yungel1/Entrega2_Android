@@ -22,11 +22,12 @@
         app:layout_constraintVertical_bias="0.016" />
 
     <Button
-        android:id="@+id/editarEmailBTN"
+        android:id="@+id/mapaBTN"
         android:layout_width="223dp"
         android:layout_height="56dp"
-        android:visibility="invisible"
-        android:text="@string/edit_email"
+        android:onClick="onClickMap"
+        android:text="@string/Map"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/idiomaBTN"
         app:layout_constraintEnd_toStartOf="@+id/idiomaBTN"
         app:layout_constraintHorizontal_bias="0.195"

@@ -53,7 +53,7 @@ public class UsuariosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_usuarios);
 
-        //Obtenemos el usuario desde la actividad login o signup
+        //Obtenemos el usuario desde la actividad login o signup (y el idioma)
         extras = getIntent().getExtras();
         if (extras != null) {
             usuario = extras.getString("usuario");
@@ -104,6 +104,12 @@ public class UsuariosActivity extends AppCompatActivity {
                     }
                 });
 
+    }
+
+    public void onClickMap(View v){
+        //Abrir la actividad del mapa de GoogleMaps
+        Intent i = new Intent (UsuariosActivity.this, MapsActivity.class);
+        startActivity(i.putExtra("usuario",usuario));
     }
 
     private void cambiarIdioma() {
