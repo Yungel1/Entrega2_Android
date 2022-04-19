@@ -12,6 +12,8 @@ import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,6 +22,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -52,6 +55,9 @@ public class LoginActivity extends AppCompatActivity implements LifecycleObserve
 
     private Bundle extras;
 
+    private AlarmManager alarmMgr;
+    private PendingIntent alarmIntent;
+
 
 
     @Override
@@ -78,7 +84,6 @@ public class LoginActivity extends AppCompatActivity implements LifecycleObserve
         //Obtenemos los elementos necesarios
         usuarioET = findViewById(R.id.usuarioET);
         contraseñaET = findViewById(R.id.contraseñaET);
-
         //Coger el idioma
         extras = getIntent().getExtras();
         if (extras != null) {
@@ -137,6 +142,9 @@ public class LoginActivity extends AppCompatActivity implements LifecycleObserve
                             int resultado = Integer.parseInt(workInfo.getOutputData().getString("resultado"));
                             //Diferentes aciones según el resultado
                             if(resultado==0){
+                                //Activamos la alarma (que nos avisará con una notificación cuando hayamos iniciado sesión hace 30 segundos)
+                                configurarAlarma();
+
                                 //Si es correcto pasamos a la siguiente actividad
                                 i = new Intent (LoginActivity.this, UsuariosActivity.class);
                                 i.putExtra("usuario",usuario);
@@ -149,6 +157,16 @@ public class LoginActivity extends AppCompatActivity implements LifecycleObserve
                         }
                     }
                 });
+
+    }
+
+    private void configurarAlarma(){
+        //Se configurar la alarma para que se lance a los 30 segundos
+        alarmMgr = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        alarmIntent = PendingIntent.getBroadcast(this, 0, intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        alarmMgr.set(AlarmManager.ELAPSED_REALTIME,
+                SystemClock.elapsedRealtime()+30*1000, alarmIntent);
 
     }
 

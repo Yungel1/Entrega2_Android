@@ -46,8 +46,8 @@ public class SignupActivity extends AppCompatActivity {
     private EditText contraseñaET;
     private EditText emailET;
 
-    private NotificationCompat.Builder elBuilder;
-    private NotificationManager elManager;
+    //private NotificationCompat.Builder elBuilder;
+    //private NotificationManager elManager;
 
     private Bundle extras;
     private String idioma;

@@ -39,4 +39,7 @@
     <string name="select_theme">Select a theme/color for the application</string>
     <string name="color_application">Color for the application?</string>
     <string name="Map">Map</string>
+    <string name="login_30">Log-in 30 seconds ago</string>
+    <string name="login_30_titulo">Log-in</string>
+    <string name="hour">Hour:</string>
 </resources>

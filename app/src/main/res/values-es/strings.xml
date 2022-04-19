@@ -39,4 +39,7 @@
     <string name="select_theme">Selecciona un tema/color para la aplicación</string>
     <string name="color_application">¿Color para la aplicación?</string>
     <string name="Map">Mapa</string>
+    <string name="login_30">Inicio de sesión hace 30 segundos</string>
+    <string name="login_30_titulo">Inicio de sesión</string>
+    <string name="hour">Hora:</string>
 </resources>
