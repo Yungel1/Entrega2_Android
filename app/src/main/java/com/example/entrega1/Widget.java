@@ -20,7 +20,10 @@ public class Widget extends AppWidgetProvider {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
         Calendar calendario = Calendar.getInstance();
         SimpleDateFormat formato = new SimpleDateFormat("HH:mm");
-        calendario.add(Calendar.HOUR, 1);
+        int minuto = calendario.get(Calendar.MINUTE);
+        if(minuto >= 30){
+            calendario.add(Calendar.HOUR, 1);
+        }
         calendario.set(Calendar.MINUTE, 0);
         String horaconformato = formato.format(calendario.getTime());
         views.setTextViewText(R.id.appwidget_text, context.getString(R.string.hour)+" "+horaconformato);

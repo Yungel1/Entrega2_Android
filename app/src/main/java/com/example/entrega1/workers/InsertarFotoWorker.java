@@ -36,7 +36,7 @@ public class InsertarFotoWorker extends Worker {
     @NonNull
     @Override
     public Result doWork() {
-        String direccion = "http://ec2-18-132-60-229.eu-west-2.compute.amazonaws.com/asanchez294/WEB/entrega2/insertarFoto.php";
+        String direccion = "http://ec2-52-56-170-196.eu-west-2.compute.amazonaws.com/asanchez294/WEB/entrega2/insertarFoto.php";
         HttpURLConnection urlConnection;
         String uriString = getInputData().getString("uriString");
         int anchoDestino = getInputData().getInt("ancho",100);

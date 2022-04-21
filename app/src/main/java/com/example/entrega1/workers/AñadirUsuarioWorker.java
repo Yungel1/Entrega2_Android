@@ -29,7 +29,7 @@ public class AñadirUsuarioWorker extends Worker {
     @NonNull
     @Override
     public Result doWork() {
-        String direccion = "http://ec2-18-132-60-229.eu-west-2.compute.amazonaws.com/asanchez294/WEB/entrega2/añadirUsuario.php";
+        String direccion = "http://ec2-52-56-170-196.eu-west-2.compute.amazonaws.com/asanchez294/WEB/entrega2/añadirUsuario.php";
         HttpURLConnection urlConnection;
         String usuarioAñade = getInputData().getString("usuarioAñade");
         String usuarioAñadido = getInputData().getString("usuarioAñadido");
