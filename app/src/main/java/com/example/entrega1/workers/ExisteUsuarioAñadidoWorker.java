@@ -34,15 +34,18 @@ public class ExisteUsuarioAñadidoWorker extends Worker {
         HttpURLConnection urlConnection;
         try {
             URL destino = new URL(direccion);
+            //Obtener los parámetros del Data
             String usuarioAñade = getInputData().getString("usuarioAñade");
             String usuarioAñadido = getInputData().getString("usuarioAñadido");
             JSONObject parametrosJSON = new JSONObject();
             try {
+                //Pasar como parámetros JSON
                 parametrosJSON.put("usuarioAñade",usuarioAñade);
                 parametrosJSON.put("usuarioAñadido",usuarioAñadido);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+            //Abrir conexión
             urlConnection = (HttpURLConnection) destino.openConnection();
             urlConnection.setConnectTimeout(5000);
             urlConnection.setReadTimeout(5000);

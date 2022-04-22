@@ -42,7 +42,7 @@ public class ServicioFirebase extends FirebaseMessagingService {
 
         }
         if (remoteMessage.getNotification() != null) {
-
+            //Se crea un canal en caso de ser necesario y se lanza la notificación
             String title = remoteMessage.getNotification().getTitle();
             String text = remoteMessage.getNotification().getBody();
 

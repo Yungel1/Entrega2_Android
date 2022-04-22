@@ -46,9 +46,6 @@ public class SignupActivity extends AppCompatActivity {
     private EditText contraseñaET;
     private EditText emailET;
 
-    //private NotificationCompat.Builder elBuilder;
-    //private NotificationManager elManager;
-
     private Bundle extras;
     private String idioma;
 
@@ -75,16 +72,6 @@ public class SignupActivity extends AppCompatActivity {
         usuarioET = findViewById(R.id.usuarioET);
         contraseñaET = findViewById(R.id.contraseñaET);
         emailET = findViewById(R.id.emailET);
-
-        //Configuración de la notificación y canales
-        /*
-        elBuilder = new NotificationCompat.Builder(this, "IdCanal");
-        elBuilder.setSmallIcon(android.R.drawable.stat_sys_warning)
-                .setContentTitle(getString(R.string.new_signup))
-                .setVibrate(new long[]{0, 1000, 500, 1000})
-                .setAutoCancel(true);
-        elManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-        */
 
         //Coger el idioma
         extras = getIntent().getExtras();
@@ -115,21 +102,6 @@ public class SignupActivity extends AppCompatActivity {
         finish();
         startActivity(getIntent().putExtra("idioma", idioma));
     }
-
-    /*
-    private void createNotificationChannel() {
-        // Crear NotificationChannel, solo para la API 26+
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel elCanal = new NotificationChannel("IdCanal", "NombreCanal",
-                    NotificationManager.IMPORTANCE_DEFAULT);
-
-            elCanal.enableLights(true);
-            elCanal.setLightColor(Color.RED);
-            elCanal.setVibrationPattern(new long[]{0, 1000, 500, 1000});
-            elCanal.enableVibration(true);
-            elManager.createNotificationChannel(elCanal);
-        }
-    }*/
 
     private int getTema(){
 
@@ -176,7 +148,7 @@ public class SignupActivity extends AppCompatActivity {
                                 toast = Toast.makeText(getApplicationContext(), errorEmail, duration);
                                 toast.show();
                             } else if(resultado==1&&!usuario.equals("")){
-
+                                //Primero se lanza la notificación de que se ha registrado, usando Firebase
                                 FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(SignupActivity.this,new OnSuccessListener<InstanceIdResult>() {
                                     @Override
                                     public void onSuccess(InstanceIdResult instanceIdResult) {
@@ -191,13 +163,8 @@ public class SignupActivity extends AppCompatActivity {
 
                                 //Si es válido, guardamos los datos en la base de datos
                                 gestorDB.registrarUsuario(usuario,contraseña,email,SignupActivity.this);
-                                /*
-                                //Lanzamos la notificación de que se ha registrado
-                                elBuilder.setStyle(new NotificationCompat.BigTextStyle()
-                                        .bigText(getString(R.string.has_been_registered)+": "+usuario));
-                                elManager.notify(1, elBuilder.build());*/
 
-                                // y pasamos a la siguiente actividad
+                                //Pasamos a la siguiente actividad
                                 i = new Intent (SignupActivity.this, UsuariosActivity.class);
                                 i.putExtra("usuario",usuario);
                                 startActivity(i.putExtra("idioma",idioma));

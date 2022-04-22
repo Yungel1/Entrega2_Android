@@ -116,19 +116,16 @@ public class MailActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        /*if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            botonImagen.setImageBitmap(imageBitmap);
 
-        }*/
         if (requestCode == CODIGO_FOTO_ARCHIVO && resultCode == RESULT_OK) {
             Bitmap bitmapFoto = null;
             try {
+                //Obtener el bitmap de la uri
                 bitmapFoto = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uriimagen);
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            //Recortar
             int anchoDestino = botonImagen.getWidth();
             int altoDestino = botonImagen.getHeight();
             int anchoImagen = bitmapFoto.getWidth();
@@ -143,20 +140,9 @@ public class MailActivity extends AppCompatActivity {
                 altoFinal = (int) ((float)anchoDestino / ratioImagen);
             }
             bitmapredimensionado = Bitmap.createScaledBitmap(bitmapFoto,anchoFinal,altoFinal,true);
-
+            //Poner la imagen en el ButtonImage
             botonImagen.setImageBitmap(bitmapredimensionado);
-            /*
-            Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-            Uri contentUri = uriimagen;
-            mediaScanIntent.setData(contentUri);
-            this.sendBroadcast(mediaScanIntent);
-
-            //Guardar en la base de datos
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bitmapredimensionado.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            byte[] fototransformada = stream.toByteArray();
-            String fotoen64 = Base64.encodeToString(fototransformada, Base64.DEFAULT);*/
-
+            //Llamada a MiBD para que inserte la foto en la base de datos
             gestorDB.insertarFoto(uriimagen.toString(),anchoDestino,altoDestino,this);
 
         }
@@ -165,6 +151,7 @@ public class MailActivity extends AppCompatActivity {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         if (bitmapredimensionado != null) {
+            //Para que no se pierda la imagen al girar la pantalla, por ejemplo
             outState.putParcelable("bitmap", bitmapredimensionado);
         }
     }

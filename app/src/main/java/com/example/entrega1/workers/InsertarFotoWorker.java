@@ -38,14 +38,17 @@ public class InsertarFotoWorker extends Worker {
     public Result doWork() {
         String direccion = "http://ec2-52-56-170-196.eu-west-2.compute.amazonaws.com/asanchez294/WEB/entrega2/insertarFoto.php";
         HttpURLConnection urlConnection;
+        //Obtener los parámetros del Data
         String uriString = getInputData().getString("uriString");
         int anchoDestino = getInputData().getInt("ancho",100);
         int altoDestino = getInputData().getInt("alto",100);
+        //Transformar en bitmap desde la uri
         Uri uriimagen = Uri.parse(uriString);
         String image = null;
         byte[] fototransformada = null;
         try {
             Bitmap bitmapFoto = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), uriimagen);
+            //Recortar
             int anchoImagen = bitmapFoto.getWidth();
             int altoImagen = bitmapFoto.getHeight();
             float ratioImagen = (float) anchoImagen / (float) altoImagen;
@@ -59,7 +62,7 @@ public class InsertarFotoWorker extends Worker {
             }
             Bitmap bitmapredimensionado = Bitmap.createScaledBitmap(bitmapFoto,anchoFinal,altoFinal,true);
 
-            //Guardar en la base de datos
+            //Guardar en la base de datos como Base64
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             bitmapredimensionado.compress(Bitmap.CompressFormat.PNG, 100, stream);
             fototransformada = stream.toByteArray();
@@ -69,11 +72,13 @@ public class InsertarFotoWorker extends Worker {
         }
         JSONObject parametrosJSON = new JSONObject();
         try {
+            //Pasar como parámetros JSON
             parametrosJSON.put("image",image);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         try {
+            //Abrir conexión
             URL destino = new URL(direccion);
             urlConnection = (HttpURLConnection) destino.openConnection();
             urlConnection.setConnectTimeout(5000);

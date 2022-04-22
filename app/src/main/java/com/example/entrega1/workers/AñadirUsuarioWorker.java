@@ -31,17 +31,19 @@ public class AñadirUsuarioWorker extends Worker {
     public Result doWork() {
         String direccion = "http://ec2-52-56-170-196.eu-west-2.compute.amazonaws.com/asanchez294/WEB/entrega2/añadirUsuario.php";
         HttpURLConnection urlConnection;
+        //Obtener los parámetros del Data
         String usuarioAñade = getInputData().getString("usuarioAñade");
         String usuarioAñadido = getInputData().getString("usuarioAñadido");
         JSONObject parametrosJSON = new JSONObject();
         try {
+            //Pasar como parámetros JSON
             parametrosJSON.put("usuarioAñade",usuarioAñade);
             parametrosJSON.put("usuarioAñadido",usuarioAñadido);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        //String parametros = "usuarioAñade="+usuarioAñade+"&usuarioAñadido="+usuarioAñadido;
         try {
+            //Abrir conexión
             URL destino = new URL(direccion);
             urlConnection = (HttpURLConnection) destino.openConnection();
             urlConnection.setConnectTimeout(5000);

@@ -20,7 +20,6 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.i("luego","luego"+ SystemClock.elapsedRealtime());
         //Lanzar notificación de que se inició sesión hace 30 segundos
         elManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
 

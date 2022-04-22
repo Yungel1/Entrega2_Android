@@ -150,48 +150,11 @@ public class UsuariosActivity extends AppCompatActivity {
         return tema;
     }
 
-    /*public void onClickCambiarEmail(View v){
-        //Alerta para cambiar el email
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
-
-        final EditText emailCambioET = new EditText(this);
-        emailCambioET.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-        //Título y texto (email actual)
-        alert.setTitle(R.string.change_email);
-        alert.setMessage(getString(R.string.actual_email)+" "+gestorDB.conseguirEmail(usuario,this));
-
-        alert.setView(emailCambioET);
-
-        alert.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-
-                //Cambiar email de la base de datos
-                gestorDB.cambiarEmail(usuario,emailCambioET.getText().toString());
-
-                //Toast para saber que se ha cambiado
-                String cambiado = getString(R.string.email_changed);
-                int duration = Toast.LENGTH_SHORT;
-                Toast toast = Toast.makeText(getApplicationContext(), cambiado, duration);
-                toast.show();
-
-            }
-        });
-        alert.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-                //Si hace click en cancel no se cambia el email
-            }
-        });
-        alert.show();
-    }*/
-
     public void onClickAñadir(View v){
         //Dialogo para añadir un usuario a la lista mediante un EditText
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
         final EditText usuarioAñadidoET = new EditText(this);
-        //alert.setMessage("Enter Your Message");
         alert.setTitle(R.string.add_user);
 
         alert.setView(usuarioAñadidoET);
@@ -199,10 +162,10 @@ public class UsuariosActivity extends AppCompatActivity {
         alert.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
-                //lanzar el worker con la petición a la base de datos (comprobar si existe el usuario añadido)
+                //worker con la petición a la base de datos (comprobar si existe el usuario añadido)
                 OneTimeWorkRequest otwrAñadido = gestorDB.existeUsuarioAñadido(usuario,usuarioAñadidoET.getText().toString(),UsuariosActivity.this);
 
-                //lanzar el worker con la petición a la base de datos (comprobar si existe el usuario)
+                //worker con la petición a la base de datos (comprobar si existe el usuario)
                 OneTimeWorkRequest otwrUsuario = gestorDB.existeUsuario(usuarioAñadidoET.getText().toString(),UsuariosActivity.this);
 
                 //encadenar work
@@ -240,7 +203,7 @@ public class UsuariosActivity extends AppCompatActivity {
                                                     @Override
                                                     public void onChanged(WorkInfo workInfo) {
                                                         if(workInfo != null && workInfo.getState().isFinished()){
-
+                                                            //lanzar el worker con la petición a la base de datos (obtener la lista de usuarios añadidos)
                                                             OneTimeWorkRequest otwrUsuarios = gestorDB.conseguirUsuariosAñadidos(usuario,UsuariosActivity.this);
 
                                                             //observar los cambios en el work
@@ -261,6 +224,7 @@ public class UsuariosActivity extends AppCompatActivity {
                                                                                     //Añadir la nueva lista
                                                                                     listaUsuarios.addAll(list);
                                                                                 }
+                                                                                //Notificar cambios
                                                                                 eladap.notifyDataSetChanged();
                                                                             }
                                                                         }

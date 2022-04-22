@@ -59,12 +59,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //Geolocalización, conseguir el fusedLocationClient
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
-        /*locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        //Checkear los permisos
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);*/
     }
 
     //Cuando se den los permisos recrear la actividad para que funcione conrrectamente la geolocalización
@@ -130,12 +124,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         return tema;
     }
-
-
-    /*@Override
-    public void onLocationChanged(@NonNull Location location) {
-
-    }*/
 
 
 }
